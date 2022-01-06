@@ -2,6 +2,7 @@
 
 這個 Repo 包含了所有 Cloud Native Taiwan Infra Labs 相關文件，包含：
 
+- [網路架構](architecture/network.md)
 - [架構文件](architecture/network.md)
 - [IaaS 架構](architecture/iaas.md)
 - [使用者指南](user-guide/openstack.md)
