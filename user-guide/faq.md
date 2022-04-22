@@ -8,7 +8,7 @@
 
 Q: 如何申請使用 Cloud Native Taiwan Infra Labs？
 
-目前尚未開放申請，預計在 2022 年 1 到 2 月之間開放，請關注 [CNTUG Facebook](https://www.facebook.com/groups/cloudnative.tw/) 或 [Telegram](https://t.me/cntug) 獲得最新消息。
+目前 Infra Labs 開放所有希望使用的人申請，欲申請資源請填寫[此表單](https://forms.gle/Hx8oxCBWAFZWUD1Z7)，管理員將會進行審核。
 
 Q: 若我的配額達上限了，我可以申請更多嗎？
 
@@ -59,4 +59,4 @@ Q: 我的 Public IPv4 不夠用了，該怎麼辦？
 
 Q: 請問 VM 有提供 IPv6 地址嗎？
 
-目前我們還在準備當中，暫時無法提供。
+目前 public 網段預設提供 IPv6 地址，歡迎使用。
