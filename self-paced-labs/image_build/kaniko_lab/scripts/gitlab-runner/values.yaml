@@ -1,0 +1,24 @@
+gitlabUrl: <your gitlab url>
+runnerRegistrationToken: "<your runner registration token>"
+concurrent: 10
+checkInterval: 30
+runners:
+  # runner configuration, where the multi line strings is evaluated as
+  # template so you can specify helm values inside of it.
+  #
+  # tpl: https://helm.sh/docs/howto/charts_tips_and_tricks/#using-the-tpl-function
+  # runner configuration: https://docs.gitlab.com/runner/configuration/advanced-configuration.html
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "ubuntu:20.04"
+
+  ## Which executor should be used
+  ##
+  executor: kubernetes
+  tags: "gitlab-runner-k8s"
+
+  ## Specify the name for the runner.
+  ##
+  name: "gitlab-runner-k8s"
