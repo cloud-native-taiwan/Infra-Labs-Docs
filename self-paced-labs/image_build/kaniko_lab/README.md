@@ -43,9 +43,9 @@ Kaniko 是 Google 在 2018 年釋出的開源容器映像檔工具，最大的�
   - 在執行器鏡像（executor image）的用戶空間中對文件系統做快照（snapshot）
 
 ### 優點
-- 不需 depend on docker daemon
-- 都在 userspace 執行
-- run as unprivileged container
+- 不需相依於 Docker daemon
+- 都在 Linux userspace 執行
+- 採用非特權權限的容器
 
 
 ### 缺點
@@ -56,12 +56,12 @@ Kaniko 是 Google 在 2018 年釋出的開源容器映像檔工具，最大的�
 
 ## 使用情境
 - 官方文件中，推薦了四種運行 Kaniko 的方法：
-    - In Kubernetes cluster
+    - Kubernetes cluster
     - In gVisor
     - In Google Cloud Build
     - In Docker
 - 適合在無法獲取 docker daemon 的環境下 build image：如 Kubernetes cluster、Google Kubernetes Engine
-- 適合用在 Gitlab ci 過程中去 build image
+- 適合用在 Gitlab CI 過程中去 build image
 
 
 ## 事前準備
@@ -71,7 +71,7 @@ Kaniko 是 Google 在 2018 年釋出的開源容器映像檔工具，最大的�
     * S3 Bucket
     * Azure Blob Storage
     * Local Directory
-    * Local Tar
+    * Local Tarball
     * Standard Input
     * Git Repository
 3. Registry：用來存放 image 的 Registry，支援 OCI 標準的 Registry 皆可
@@ -110,7 +110,7 @@ Kaniko 是 Google 在 2018 年釋出的開源容器映像檔工具，最大的�
 這邊需要準備三個檔案
 - pod.yaml：建立執行 kaniko 的 pod
     - `--context`： 可指定 Git Repository 作為 build context，若未特別指定則預設使用 local directory，用法如下：
-      - `--context=git://[repository url][#reference][#commit-id]`
+    - `--context=git://[repository url][#reference][#commit-id]`
     - `--destination`： 指定 Registry 以及 Repo 名稱，可在此處上 image tag，這邊我們使用 docker hub 作為目標 Registry，因此需更改為使用者 docker hub的 username
 - volume.yaml：建立存放 build context 的 persistent volume 
 - volume-claim.yaml：建立 persistent volume claim，後續會用來掛載 kaniko container
@@ -178,7 +178,7 @@ INFO[0013] Pushed index.docker.io/kn71026/kaniko@sha256:dfc60edba2296b8fa4026495
 
 #### pull image 下來測試是否能運行
 ```shell=
-docker run -it <user-name>/<repo-name>
+docker run -it kn71026/kaniko:latest
 Unable to find image 'kn71026/kaniko:latest' locally
 latest: Pulling from kn71026/kaniko
 125a6e411906: Pull complete

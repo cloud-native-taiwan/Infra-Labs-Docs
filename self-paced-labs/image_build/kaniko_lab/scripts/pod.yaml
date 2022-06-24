@@ -8,7 +8,7 @@ spec:
     image: gcr.io/kaniko-project/executor:latest
     args: ["--dockerfile=/workspace/dockerfile",
             "--context=dir://workspace",
-            "--destination=<user-name>/<repo-name>"] # replace with your dockerhub account
+            "--destination=<UserName>/<RepoName>"] # replace with your dockerhub account
     volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker
