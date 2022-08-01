@@ -2,22 +2,19 @@
 
 [Dashboard 連結](https://openstack.cloudnative.tw/)
 
-TODO:
-- [ ] Change Image Link to GitHub
-
 ## 登入並且更改密碼
 
 取得帳號及密碼後，登入 OpenStack
 
-![](https://i.imgur.com/xuSSzPr.png)
+![](images/login_page.png)
 
 點擊右上方的 Settings
 
-![](https://i.imgur.com/uPro5ta.png)
+![](images/settings.png)
 
 接著選擇左邊的 Change Password，即可修改密碼。
 
-![](https://i.imgur.com/9Qd2cJm.png)
+![](images/change_password.png)
 
 ## 上傳 SSH 金鑰
 
@@ -88,7 +85,7 @@ OpenStack 允許各個用戶在自己專案建立自己的私有網路，私有�
     - DHCP 地址池
     - DNS 位置
 
-![](https://i.imgur.com/L1CJyiV.png)
+![](images/change_password.png)
 
 
 ## 建立路由器
