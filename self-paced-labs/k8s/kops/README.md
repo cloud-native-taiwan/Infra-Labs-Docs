@@ -7,7 +7,7 @@
 Kops 是 Kubernetes Operation 的縮寫，顧名思義就是一個拿來做 K8S 維運相關操作的一個工具，而 kops 目前有幾項特點
 
 - 支援建立、維護、升級、摧毀 K8S 群集
-- 支援 AWS (production)、OpenStack/Digital Ocean (Beta)、Azure/GCP (Alpha)
+- 支援 AWS (production)、OpenStack/DigitalOcean (Beta)、Azure/GCP (Alpha)
 - 能夠透過 kops 生成群集的 Terraform template
 - 管理 K8S cluster add-ons
 - 自動部署 K8S 群集
@@ -85,24 +85,21 @@ make
 
 ## Lab：建立 Kubernetes Cluster
 
-> **Note**
->
-> 由於目前 [OVN 支援的 patch](https://github.com/kubernetes/kops/pull/13678) 尚未被放在最新版 release 中，請使用上一個章節的方法編譯 kops
-
 ### 下載 OpenStack Credential
 
 > **Note**
 >
 > 請聯絡 admin 開啟 load balancer 使用權限
 
-進入 OpenStack 面板 -> Project / API Access，在右上方選擇下載 OpenStack RC File。
- > 以 CNTUG Infra Lab 為例，該連結在 https://openstack.cloudnative.tw/project/api_access/
+進入 OpenStack 面板 -> Identity / Application Credentials，在右上方選擇建立新的 Application Credential。
+> 以 CNTUG Infra Lab 為例，該連結在 https://openstack.cloudnative.tw/identity/application_credentials/
+
+建立完成後，點擊 Download openrc file，將會下載一個 Shell Script 檔案。
 
 下載完成後，會需要將 RC file 的資訊放進 shell environment variable
 
 ```bash
 source openrc.sh
-# 會需要輸入密碼
 export OS_DOMAIN_NAME=Default
 ```
 
