@@ -1,0 +1,5 @@
+resource "openstack_compute_keypair_v2" "lab-keypair" {
+  name = "fq_codel-lab-keypair"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEIbyN680cNHeGr2vz1eFW5SWihgaF18bW66KdQugnDqzDWyf0aUUnN4WVy+fcP/NpjdDclmND0kNx5z0lD4UwzymEzR0O2f5ddBLUVjcvr06tIBpkCJ/vFgMpwauYfbCsOg+ZVRbWio/FFQsdU/jd2MNgoVZBjxcFb3S05nblQlkkHTCtKbO4Xbbmv9NgZL5VbCiszr5vnoj0RPNU3GrQaun8Yacpps6TUrweKQBqdGGVNKdDYHSl7DoRNqrK0ZDIK0qafyZ/y/zbb+z30nlUkKaojVuw4XGDHNsNu0xDdlhi0U+RECQ5UT+XzVFbQk9Loyj72qMaXPKdthgIf5U9"
+}
+
