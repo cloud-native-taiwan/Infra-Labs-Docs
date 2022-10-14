@@ -85,7 +85,7 @@ OpenStack 允許各個用戶在自己專案建立自己的私有網路，私有�
     - DHCP 地址池
     - DNS 位置
 
-![](images/change_password.png)
+![](images/create_network.png)
 
 
 ## 建立路由器
