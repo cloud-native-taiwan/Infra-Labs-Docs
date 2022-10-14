@@ -17,6 +17,9 @@
 - [TOEDU 台灣開放教育推動團隊](https://toedu.g0v.tw/index.html)
 - Building Kubernetes cluster the hard way
     - [影片](https://www.youtube.com/watch?v=YexUnVOZC8M&t=17837s)
+- 2022 iThome 鐵人賽《關於我怎麼把一年內學到的新手 IT/SRE 濃縮到 30 天筆記這檔事》
+    - [Jerry Yang's Blog](https://blog.yangjerry.tw/categories/IT-%E9%90%B5%E4%BA%BA%E8%B3%BD/2022/)
+    - [iThome](https://ithelp.ithome.com.tw/users/20112934/ironman/5640)
 
 This is a repository contains all documents related to Cloud Native Taiwan Infra Labs including:
 
@@ -35,3 +38,6 @@ Existing use cases:
 - [TOEDU Taiwan Open Education Develop Unit](https://toedu.g0v.tw/index.html)
 - Building Kubernetes cluster the hard way
     - [Video](https://www.youtube.com/watch?v=YexUnVOZC8M&t=17837s)
+- 2022 iThome 鐵人賽《Newbie IT/SRE notes in 30 days》
+    - [Jerry Yang's Blog](https://blog.yangjerry.tw/categories/IT-%E9%90%B5%E4%BA%BA%E8%B3%BD/2022/)
+    - [iThome](https://ithelp.ithome.com.tw/users/20112934/ironman/5640)
