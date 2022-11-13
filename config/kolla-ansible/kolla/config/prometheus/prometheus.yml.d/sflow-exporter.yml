@@ -1,0 +1,48 @@
+---
+scrape_configs:
+  - job_name: 'sflow-rt-analyzer'
+    metrics_path: /prometheus/analyzer/txt
+    static_configs:
+      - targets: ['192.168.0.10:8008']
+  - job_name: 'sflow-rt-metrics'
+    metrics_path: /prometheus/metrics/ALL/ALL/txt
+    static_configs:
+      - targets: ['192.168.0.10:8008']
+  - job_name: 'sflow-rt-flow-src-dst-bps'
+    metrics_path: /app/prometheus/scripts/export.js/flows/ALL/txt
+    static_configs:
+      - targets: ['192.168.0.10:8008']
+    params:
+      metric: ['ip_src_dst_bps']
+      key: ['ipsource','ipdestination']
+      label: ['src','dst']
+      value: ['bytes']
+      scale: ['8']
+      minValue: ['1000']
+      maxFlows: ['100']
+  - job_name: 'sflow-rt-countries'
+    metrics_path: /app/prometheus/scripts/export.js/flows/ALL/txt
+    static_configs:
+      - targets: ['192.168.0.10:8008']
+    params:
+      metric: ['sflow_country_bps']
+      key: ['null:[country:ipsource:both]:unknown','null:[country:ipdestination:both]:unknown']
+      label: ['src','dst']
+      value: ['bytes']
+      scale: ['8']
+      aggMode: ['sum']
+      minValue: ['1000']
+      maxFlows: ['100']
+  - job_name: 'sflow-rt-asns'
+    metrics_path: /app/prometheus/scripts/export.js/flows/ALL/txt
+    static_configs:
+      - targets: ['192.168.0.10:8008']
+    params:
+      metric: ['sflow_asn_bps']
+      key: ['null:[asn:ipsource:both]:unknown','null:[asn:ipdestination:both]:unknown']
+      label: ['src','dst']
+      value: ['bytes']
+      scale: ['8']
+      aggMode: ['sum']
+      minValue: ['1000']
+      maxFlows: ['100']

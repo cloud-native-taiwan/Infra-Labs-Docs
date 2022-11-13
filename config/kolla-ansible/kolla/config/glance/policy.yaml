@@ -1,0 +1,6 @@
+{
+    "default": "",
+    "add_image": "role:admin or role:image_admin",
+    "modify_image": "role:admin or role:image_admin",
+    "delete_image": "role:admin or role:image_admin"
+}
