@@ -42,4 +42,6 @@ Existing use cases:
 - 2022 iThome 鐵人賽《Newbie IT/SRE notes in 30 days》
     - [Jerry Yang's Blog](https://blog.yangjerry.tw/categories/IT-%E9%90%B5%E4%BA%BA%E8%B3%BD/2022/)
     - [iThome](https://ithelp.ithome.com.tw/users/20112934/ironman/5640)
-- [2022 iThome 鐵人賽《5G 核心網路與雲原生開發之亂彈阿翔》](https://ithelp.ithome.com.tw/articles/10306986)
+- 2022 iThome 鐵人賽《5G 核心網路與雲原生開發之亂彈阿翔》
+    - [iTHome](https://ithelp.ithome.com.tw/articles/10306986)
+    - [GitHub](https://github.com/ianchen0119/Introduce-to-5GC/wiki)
