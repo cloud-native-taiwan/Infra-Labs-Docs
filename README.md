@@ -24,6 +24,7 @@
 - [UniCourse 大學課程資訊交流平臺](unicourse.tw)
     - [GitHub](https://github.com/UniCourse-TW)
     - [g0v 專案](https://sch001.g0v.tw/dash/prj/PHfxJKR2hpg7f9rt58i9g6WZ_ZRo08)
+- [SCIST 南臺灣學生資訊社群](https://scist.org)
 
 This is a repository contains all documents related to Cloud Native Taiwan Infra Labs including:
 
@@ -51,3 +52,4 @@ Existing use cases:
 - [UniCourse 大學課程資訊交流平臺](unicourse.tw)
     - [GitHub](https://github.com/UniCourse-TW)
     - [g0v 專案](https://sch001.g0v.tw/dash/prj/PHfxJKR2hpg7f9rt58i9g6WZ_ZRo08)
+- [Students' Community of Information in Southern Taiwan](https://scist.org)
