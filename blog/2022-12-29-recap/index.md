@@ -9,6 +9,8 @@ tags: [recap]
 
 CNTUG Infra Labs 自從 2022/1/1 開放申請至今已經快一年了，其中經過了幾次軟硬體升級、架構更改以及 outage。這篇文章大概來記錄一下 Infra Labs 這一年的整個建立以及營運過程。
 
+<!--truncate-->
+
 ![](images/current_rack.jpg)
 
 ## 專案動機
