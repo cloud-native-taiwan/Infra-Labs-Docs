@@ -1,5 +1,0 @@
----
-- targets:
-  - 192.168.0.10:8008
-  labels:
-    job: sflow-exporter
