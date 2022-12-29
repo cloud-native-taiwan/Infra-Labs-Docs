@@ -11,7 +11,7 @@ CNTUG Infra Labs 自從 2022/1/1 開放申請至今已經快一年了，其中�
 
 <!--truncate-->
 
-![](images/current_rack.jpg)
+![Rack View](images/current_rack.jpg)
 
 ## 專案動機
 
@@ -53,7 +53,7 @@ CNTUG Infra Labs 自從 2022/1/1 開放申請至今已經快一年了，其中�
 
 在與上游廠商談好了網路以及機櫃的租用合約後就來了實際建構環境的過程了。整個 Infra Labs 的建置基本上是從一個空空的機櫃開始、從上架、接線、設備設定、OS 安裝、IaaS 部署一層一層的蓋上去。
 
-![](images/rack_after_cabling.jpg)
+![Rack After Cabling](images/rack_after_cabling.jpg)
 
 在這邊也額外感謝 [Shouko](https://github.com/shouko) 以及 Samina 抽空來幫忙上架以及接線和 [steveyiyo](https://steveyi.net/)、[p6i](https://pwtsai.github.io) 協助網路設定和排除等。
 
@@ -104,6 +104,19 @@ Outage 的部分不乏幾個蠻有趣的：
     - [GitHub](https://github.com/UniCourse-TW)
     - [g0v 專案](https://sch001.g0v.tw/dash/prj/PHfxJKR2hpg7f9rt58i9g6WZ_ZRo08)
 - [SCIST 南臺灣學生資訊社群](https://scist.org/)
+
+### 目前專案利用狀況
+
+目前專案中總共運行了以下資源：
+
+- VM: 64 台
+- vCPU: 352 個
+- RAM: 433 GiB
+- Public IPv4: 66 個
+- NVMe Storage: 約 2.4 TiB
+- SSD Storage: 約 1.5 TiB
+
+![Resource Usage](images/resource.png)
 
 ## 目前困難
 
