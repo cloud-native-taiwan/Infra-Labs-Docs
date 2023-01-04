@@ -46,6 +46,10 @@ const config = {
           editUrl:
             'https://github.com/cloud-native-taiwan/Infra-Labs-Docs/tree/main/',
         },
+        gtag: {
+          trackingID: 'G-63LPQ1DDY1',
+          anonymizeIP: true,
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
