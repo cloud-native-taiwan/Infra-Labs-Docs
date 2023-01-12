@@ -70,6 +70,7 @@ const sidebars = {
       },
       items: [
         'self-paced-labs/kaniko/index',
+        'self-paced-labs/tool_compare_lab/index',
       ]
     },
     {
