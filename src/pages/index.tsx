@@ -36,7 +36,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="CNTUG Infra Labs 說明文件<head />">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
