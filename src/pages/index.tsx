@@ -25,6 +25,12 @@ function HomepageHeader() {
             to="https://forms.gle/rqahTzwQaamkp7eb9">
             申請 Infra Labs
           </Link>
+          <Link
+            className="margin-left--md button button--secondary button--lg"
+            to="https://ocf.neticrm.tw/civicrm/contribute/transact?reset=1&id=29">
+            贊助 Infra Labs
+          </Link>
+
         </div>
       </div>
     </header>
