@@ -28,3 +28,23 @@
   --ifm-color-primary-lightest: #ffffff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+.button--sponsor {
+  --ifm-color-primary: #d03592;
+  --ifm-color-primary-dark: #bf2c84;
+  --ifm-color-primary-darker: #b42a7d;
+  --ifm-color-primary-darkest: #942267;
+  --ifm-color-primary-light: #d54a9d;
+  --ifm-color-primary-lighter: #d755a3;
+  --ifm-color-primary-lightest: #df75b4;
+}
+
+[data-theme='dark'] .button--sponsor {
+  --ifm-color-primary: #ea4aaa;
+  --ifm-color-primary-dark: #e72e9d;
+  --ifm-color-primary-darker: #e52197;
+  --ifm-color-primary-darkest: #c1167d;
+  --ifm-color-primary-light: #ed66b7;
+  --ifm-color-primary-lighter: #ef73bd;
+  --ifm-color-primary-lightest: #f49dd1;
+}

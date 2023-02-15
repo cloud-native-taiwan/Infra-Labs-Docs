@@ -26,7 +26,7 @@ function HomepageHeader() {
             申請 Infra Labs
           </Link>
           <Link
-            className="margin-left--md button button--secondary button--lg"
+            className="margin-left--md button button--primary button--sponsor button--lg "
             to="https://ocf.neticrm.tw/civicrm/contribute/transact?reset=1&id=29">
             贊助 Infra Labs
           </Link>
