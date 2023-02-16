@@ -6,8 +6,11 @@
 
 ## 架構圖
 
-
 ![High Level Network](images/high_level_network.png)
+
+:::note
+Rack 2 目前仍在建置中。
+:::
 
 ## 設備
 
@@ -18,19 +21,17 @@
 
 ### 路由器
 
-路由器目前使用兩台 Juniper NFX250，主要功能是與上游進行 BGP 宣告和 Infra Labs 使用 public IP 的 gateway。除此之外，路由器也被用來過濾掉一些容易被攻擊的連接埠。
+路由器目前使用一台 Juniper NFX250，主要功能是與上游進行 BGP 宣告和 Infra Labs 使用 public IP 的 gateway。除此之外，路由器也被用來過濾掉一些容易被攻擊的連接埠。
 
 ### 交換機
 
 #### Juniper EX3300-48T
 
-2 台 EX3300-48T stacking 提供了 PXE/In band management 網路、OpenStack API 網路和 OpenStack VM 所使用的 public network。往上接至 NFX250
+EX3300-48T stacking 提供了 PXE/In band management 網路
 
 #### Arista DCS-7060CX-32S
 
-Arista DCS-7060CX-32S 100G 交換機主要用於 VM 內部網路、Libvirt migration 網路和 Ceph 的 public/private 網路。
-
-向下用 breakout cable 接至主機的 25G 網卡。
+Arista DCS-7060CX-32S 100G 交換機主要用於 VM 內/外部網路、Libvirt migration 網路和 Ceph 的 public/private 網路。
 
 #### Juniper EX2200-24T
 
@@ -53,7 +54,7 @@ LTE 設備主要提供備援網路，若 NFX250 設定出問題導致主要網�
 
 目前網段主要分為以下：
 
-- untagged: 
+- vlan3000 (untagged access): 
     - 192.168.0.0/24 
     - PXE/IB
 - vlan 100 

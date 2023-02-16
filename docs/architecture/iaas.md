@@ -8,15 +8,17 @@ TODO:
 
 目前 Infra Labs 透過 OpenStack 和 Ceph 來提供 Infrastructure as a Service (IaaS) 服務。本篇會介紹使用的 OpenStack 專案以及 Ceph 的架構。
 
+設定檔以及一些 Ansible Script 將公開於 [Infra-Labs-Config repository](https://github.com/cloud-native-taiwan/Infra-Labs-Config)。
+
 ## 硬體
 
 Infra Labs 使用了 3 台伺服器用於提供 IaaS 服務，規格如下：
 
 - CPU: 2\*Intel Xeon Gold 6230R
-- RAM: 8\*32GB DDR4 3200Mhz ECC RDIMM
+- RAM: 12\*32GB DDR4 2933Mhz ECC RDIMM
 - NIC: 
     - on board 4*1G
-    - Mellanox ConnectX-4 Lx 25G*2
+    - Mellanox ConnectX-4 100G
 - Disk
     -  Boot Disk: 2\*Intel 730 240GB or 2\* Sandisk CloudSpeed Eco Gen II 480GB
     -  Ceph SSD: Samsung NGSFF PM983 3.84TB
@@ -29,8 +31,6 @@ Infra Labs 使用了 3 台伺服器用於提供 IaaS 服務，規格如下：
 ### Ansible
 
 Ansible 被用來做一些 OS 安裝後的設定，如安裝一些必要軟體、網卡的設定等等。
-
-後續此 Ansible Script 將會公開至 Cloud Native Taiwan 內的 Repo。
 
 ### OpenStack
 
@@ -68,7 +68,7 @@ Infra Labs 所使用的 OpenStack 服務有：
 
 ### Ceph
 
-Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部屬，後端網路使用 25G 網卡做 bonding。
+Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部屬，後端網路使用 100G 網卡。
 
 提供的服務有：
 
@@ -81,5 +81,5 @@ Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部屬
 
 - replicated_nvme
     - 使用 NVMe SSD 作為儲存媒介
-- replicated_hdd
-    - 使用 HDD 作為儲存媒介
+- replicated_sata_ssd
+    - 使用 SATA SSD 作為儲存媒介
