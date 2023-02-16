@@ -8,9 +8,9 @@
 
 ![High Level Network](images/high_level_network.png)
 
-> **Note**
->
-> Rack 2 目前仍在建制中。
+:::note
+Rack 2 目前仍在建置中。
+:::
 
 ## 設備
 
