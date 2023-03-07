@@ -23,11 +23,14 @@ Rack 2 目前仍在建置中。
 
 路由器目前使用一台 Juniper NFX250，主要功能是與上游進行 BGP 宣告和 Infra Labs 使用 public IP 的 gateway。除此之外，路由器也被用來過濾掉一些容易被攻擊的連接埠。
 
+另一台 NFX250 主要用於：
+
+- In band management 網路 NAT gateway
+- Dashboard, DNS server 的 NAT
+- Out of band Mangement 網路 VPN access
+- DNS server 流量限制
+
 ### 交換機
-
-#### Juniper EX3300-48T
-
-EX3300-48T stacking 提供了 PXE/In band management 網路
 
 #### Arista DCS-7060CX-32S
 
@@ -36,15 +39,6 @@ Arista DCS-7060CX-32S 100G 交換機主要用於 VM 內/外部網路、Libvirt m
 #### Juniper EX2200-24T
 
 Juniper EX2200-24T 主要用於 Out of band management 網路。下接至各個主機 IPMI、網路設備 management port，上接至 Fortigate 200D。
-
-## 防火牆
-
-防火牆使用 Fortigate 200D 一台，主要用於
-
-- In band management 網路 NAT gateway
-- Dashboard, DNS server 的 NAT
-- Mangement 網路 VPN access
-- DNS server 流量限制
 
 ### LTE 設備
 
