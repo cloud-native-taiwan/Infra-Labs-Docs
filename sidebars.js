@@ -81,7 +81,8 @@ const sidebars = {
         type: 'generated-index',
       },
       items: [
-        'self-paced-labs/kops/index'
+        'self-paced-labs/kops/index',
+        'self-paced-labs/kwok-in-docker/index'
       ]
     },
   ],
