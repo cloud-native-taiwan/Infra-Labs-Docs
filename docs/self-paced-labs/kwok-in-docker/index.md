@@ -20,7 +20,7 @@ KWOK 的應用情境，開發者想要在幾秒鐘內建立一個由數千個節
 
 - OS: Ubuntu 22.04
 - Docker Engine: 23.0.1
-- KOWK: Docker - All in one image - cluster:v1.26.0
+- KWOK: Docker - All in one image - cluster:v1.26.0
 - K8s simulate version: v1.26.0
 - kubectl version: v1.26.0
 
@@ -266,7 +266,7 @@ kubectl get pod -A
 
 ## 停止 KWOK
 
-最後就把 KOWK 的 container 停止就好。
+最後就把 KWOK 的 container 停止就好。
 
 ```bash
 docker ps -a
