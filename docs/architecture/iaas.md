@@ -64,7 +64,7 @@ Infra Labs 所使用的 OpenStack 服務有：
 - [Keepalived](https://github.com/acassen/keepalived)
 - [HAProxy](http://www.haproxy.org/)
 
-詳細設定檔在皆會公開至此 Repo。
+詳細設定檔皆公開至[此 Repo](https://github.com/cloud-native-taiwan/Infra-Labs-Config)。
 
 ### Ceph
 
