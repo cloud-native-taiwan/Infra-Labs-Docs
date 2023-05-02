@@ -68,6 +68,12 @@ const config = {
         },
         items: [
           {
+            to: '/intro',
+            label: 'Intro',
+            position: 'left'
+          },
+
+          {
             type: 'doc',
             docId: 'intro',
             position: 'left',
