@@ -21,12 +21,12 @@ function HomepageHeader() {
             開始閱讀
           </Link>
           <Link
-            className="margin-left--md button button--info button--lg"
+            className="button button--info button--lg"
             to="https://forms.gle/rqahTzwQaamkp7eb9">
             申請 Infra Labs
           </Link>
           <Link
-            className="margin-left--md button button--primary button--sponsor button--lg "
+            className="button button--primary button--sponsor button--lg "
             to="https://ocf.neticrm.tw/civicrm/contribute/transact?reset=1&id=29">
             贊助 Infra Labs
           </Link>
