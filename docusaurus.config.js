@@ -161,6 +161,10 @@ const config = {
             title: '更多',
             items: [
               {
+                label: 'Icon License',
+                to: '/icon-license',
+              },
+              {
                 label: 'Blog',
                 to: '/blog',
               },
