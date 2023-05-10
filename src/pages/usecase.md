@@ -25,3 +25,4 @@ title: Usecase 使用案例
     - [GitHub](https://github.com/UniCourse-TW)
     - [g0v 專案](https://sch001.g0v.tw/dash/prj/PHfxJKR2hpg7f9rt58i9g6WZ_ZRo08)
 - [SCIST 南臺灣學生資訊社群](https://scist.org)
+- [言雅 Elegant TW](https://elegant.tw)
