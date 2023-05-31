@@ -12,21 +12,62 @@ TODO:
 
 ## 硬體
 
-Infra Labs 使用了 3 台伺服器用於提供 IaaS 服務，規格如下：
+Infra Labs 使用了 9 台伺服器用於提供 IaaS 服務，規格如下：
 
-- CPU: 2\*Intel Xeon Gold 6230R
-- RAM: 12\*32GB DDR4 2933Mhz ECC RDIMM
+Hostname: `openstack01-03`
+
+- CPU: Intel Xeon Gold 6230R \* 2
+- RAM: 32GB DDR4 2933Mhz ECC RDIMM \* 12
 - NIC: 
-    - on board 4*1G
-    - Mellanox ConnectX-4 100G
+    - on board quad port 1G
+    - Mellanox ConnectX-4 100GbE
 - Disk
-    -  Boot Disk: 2\*Intel 730 240GB or 2\* Sandisk CloudSpeed Eco Gen II 480GB
+    -  Boot Disk: Intel 730 240GB \* 2 or Sandisk CloudSpeed Eco Gen II 480GB \* 2
     -  Ceph SSD: Samsung NGSFF PM983 3.84TB
-    -  Ceph HDD: Toshiba MQ04AB 5400rpm 4TB
 
-此三台主機上運行了所有 OpenStack 和 Ceph 服務。
+Hostname: `openstack04-05`
+
+- CPU: AMD Epyc 7413
+- RAM: 32GB DDR4 3200Mhz ECC RDIMM \* 8
+- NIC:
+    - on board quad port 1G
+    - Mellanox ConnectX-4 Lx Dual Port 25GbE
+- Disk
+    - Boot Disk: Seagate Enterprise Performance 15K 900GB \* 2
+    - Ceph SSD: Samsung 980 1TB \* 4
+    - Ceph HDD: Seagate X18 16TB
+
+Hostname: `openstack06`
+
+- CPU: Xeon Silver 4110
+- RAM: 32GB DDR4 2666Mhz ECC RDIMM \* 6
+- NIC:
+    - on board dual port 1GbE
+    - Mellanox ConnectX-4 Lx Dual Port 25GbE
+- Disk
+    - Boot Disk: Intel S3500 120GB \* 2
+    - Ceph HDD: Seagate X18 16TB
+
+Hostname: `arm01-03`
+
+- CPU: Ampere eMAG 8180
+- RAM: 32GB DDR4 2400Mhz ECC RDIMM \* 2(arm03 \* 4)
+- NIC:
+    - on board dual port 1GbE
+    - Mellanox ConnectX-4 Lx Dual Port 25GbE
+- Disk
+    - Boot Disk: Intel S3500 120GB
+    - Ceph HDD: Seagate X16 16TB
 
 ## 軟體
+
+### 主機任務分配
+
+- OpenStack Controller: `openstack01-03`
+- OpenStack Compute: `openstack01-05`
+- Ceph Controller: `openstack01-03`
+- Ceph OSDs: All nodes
+- Monitoring: `openstack06`
 
 ### Ansible
 
@@ -68,7 +109,7 @@ Infra Labs 所使用的 OpenStack 服務有：
 
 ### Ceph
 
-Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部屬，後端網路使用 100G 網卡。
+Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部屬，後端網路使用 100G/25G 網卡。
 
 提供的服務有：
 
@@ -83,3 +124,5 @@ Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部屬
     - 使用 NVMe SSD 作為儲存媒介
 - replicated_sata_ssd
     - 使用 SATA SSD 作為儲存媒介
+- erasure profile main
+    - 4+2 Erasure Coding 作為 S3 儲存池
