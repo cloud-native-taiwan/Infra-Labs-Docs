@@ -8,10 +8,6 @@
 
 ![High Level Network](images/high_level_network.png)
 
-:::note
-Rack 2 目前仍在建置中。
-:::
-
 ## 設備
 
 目前 Infra Labs 採用多廠牌網路設備，由於網路設備使用開源軟體極少以及價格通常偏高。
@@ -36,6 +32,10 @@ Rack 2 目前仍在建置中。
 
 Arista DCS-7060CX-32S 100G 交換機主要用於 VM 內/外部網路、Libvirt migration 網路和 Ceph 的 public/private 網路。
 
+### Celestica DX010
+
+Celestica DX010 100G 作為 Rack2 的核心交換機。
+
 #### Juniper EX2200-24T
 
 Juniper EX2200-24T 主要用於 Out of band management 網路。下接至各個主機 IPMI、網路設備 management port，上接至 Fortigate 200D。
@@ -57,6 +57,8 @@ LTE 設備主要提供備援網路，若 NFX250 設定出問題導致主要網�
 - vlan 101
     - 10.0.1.0/24
     - libvirt internal (for migration)
+- vlan 1088
+    - rack2_mgmt: 192.168.88.0/24
 - vlan 1113
     - 192.168.113.0/24
     - API network
