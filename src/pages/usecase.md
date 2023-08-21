@@ -1,10 +1,10 @@
 ---
-title: Usecase 使用案例
+title: Use cases 使用案例
 ---
 
-# Usecase 使用案例
+# Use cases 使用案例
 
-這裡是 CNTUG Infra Labs 的相關 Usecase，給各位做個參考。
+這裡是 CNTUG Infra Labs 的相關 Use cases，給各位做個參考。
 
 ## 相關分享
 
@@ -26,3 +26,4 @@ title: Usecase 使用案例
     - [g0v 專案](https://sch001.g0v.tw/dash/prj/PHfxJKR2hpg7f9rt58i9g6WZ_ZRo08)
 - [SCIST 南臺灣學生資訊社群](https://scist.org)
 - [言雅 Elegant TW](https://elegant.tw)
+- [Enhance “modmesh” building process with “devenv” and “CNTUG Infra Labs”](https://www.terry.taipei/2023/08/enhance-modmesh-building-process-with-devenv-and-cntug-infra-labs/)
