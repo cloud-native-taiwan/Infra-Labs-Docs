@@ -98,7 +98,7 @@ const config = {
           },
           {
             to: '/usecase',
-            label: 'Usecase',
+            label: 'Use Cases',
             position: 'left'
           },
           {
