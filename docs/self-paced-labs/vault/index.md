@@ -4,10 +4,10 @@ description: ""
 
 # Quarkus 整合 Vault KV 引擎
 :::note
-本篇文章內容與實驗會同步[CCH0124 - vault-demo](https://github.com/CCH0124/quarkus-demo/tree/main/vault-demo/example/vault)
+本篇文章內容與實驗會同步 [CCH0124 - vault-demo](https://github.com/CCH0124/quarkus-demo/tree/main/vault-demo/example/vault)
 :::
 
-HashiCorp Vault 屬於 CNCF 的 Key Management 類別的一員。
+HashiCorp Vault 屬於 CNCF 的 [Key Management](https://landscape.cncf.io/card-mode?category=key-management&grouping=category) 類別的一員。
 
 現今服務開發對於應用程式存取機密性資料相對都是難免，無論是在原始碼、配置檔或是其它位置。如果沒有一個機制來控管授權，想必是相當的可怕隨時都有洩漏危機。透過 Vault 可以集中管理這些機密資源，應用程式或是使用者要存取機密資源都需經過身分驗證來獲取相對應訪問資源，這樣可減少不必要的洩漏。
 
@@ -26,8 +26,8 @@ HashiCorp Vault 屬於 CNCF 的 Key Management 類別的一員。
 - Docker Engine: 23.0.5
 - k3d version: v5.4.9
 - kubectl version: v1.27.1
-- Helm
-- Vault 
+- Helm version: v3.11.3
+- Vault chart version: 0.25.0
 
 ## 環境安裝與配置
 1. [install docker](https://docs.docker.com/engine/install/ubuntu/)
@@ -35,7 +35,7 @@ HashiCorp Vault 屬於 CNCF 的 Key Management 類別的一員。
 3. [install k3d](https://k3d.io/v5.4.9/#install-script)
 
 
-安裝完 k3d 後，使用下面 K3d 配置檔案建立一個 Kubernetes 環境
+安裝完 k3d 後，使用下面 k3d 配置檔案建立一個 Kubernetes 環境 :
 
 ```yaml
 ## vault-conf.yaml
@@ -79,9 +79,9 @@ CURRENT   NAME                                                                 C
 
 
 4. [Install Helm](https://helm.sh/docs/intro/install/#from-apt-debianubuntu)
-5. Install Nginx ingress controller
+5. Install Nginx ingress controller:
 
-在 `k3d` 上安裝 Kubernetes 時關閉了 `traefik` 選項，所以這邊用 `ingress-nginx` 取代，並使用 Helm chart 安裝
+在 `k3d` 上安裝 Kubernetes 時關閉了 `traefik` 選項，所以這邊用 `ingress-nginx` 取代，並使用 Helm chart 安裝，安裝步驟如下：
 
 ```bash
 $ helm repo add ingress-nginx  https://kubernetes.github.io/ingress-nginx
@@ -102,7 +102,7 @@ NAME                                                  DESIRED   CURRENT   READY 
 replicaset.apps/ingress-nginx-controller-7d5fb757db   1         1         1       2m36s
 ```
 
-6. Install Vault
+6. Install Vault:
 
 使用 Helm chart 安裝
 
@@ -114,7 +114,7 @@ quarkus-demo/vault-demo$ helm install vault hashicorp/vault --version 0.25.0 --n
 
 關於 Vault 的 `values.yaml` 安裝配置可參考我的[鏈結](https://raw.githubusercontent.com/CCH0124/quarkus-demo/main/vault-demo/values/vault/values.yaml)
 
-安裝完之後必須作初始化和解封的動作
+安裝完之後必須作初始化和解封的動作，流程如下:
 
 ```bash
 # 初始化
@@ -237,7 +237,7 @@ mqtt.password    demo1234
 mqtt.username    demo
 ```
 
-如果資料定義錯誤想要做修正可以使用 `kv patch` 指令，假設 `mqtt.password` 設定錯誤要換成 demo12345678。這時又對資料進行了異動因此 `version` 加了一個版號
+如果資料定義錯誤想要做修正可以使用 `kv patch` 指令，假設 `mqtt.password` 設定錯誤要換成 demo12345678。這時又對資料進行了異動因此 `version`。
 
 ```bash
 $ vault kv patch -mount=kv quarkus/vault-demo mqtt.password=demo12345678
