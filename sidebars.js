@@ -83,7 +83,8 @@ const sidebars = {
       items: [
         'self-paced-labs/kops/index',
         'self-paced-labs/kwok-in-docker/index',
-        'self-paced-labs/vault/index'
+        'self-paced-labs/vault/index',
+        'self-paced-labs/quarkus-with-helm-charts/index'
       ]
     },
   ],
