@@ -132,7 +132,7 @@ export KOPS_STATE_STORE=swift://kops
 ```bash
 kops create cluster \
   --cloud openstack \
-  --name <cluster_name> \
+  --name <cluster_name>.k8s.local \
   --state ${KOPS_STATE_STORE} \
   --zones nova \
   --network-cidr 10.0.0.0/24 \
@@ -230,3 +230,38 @@ kops 將會刪除所有在 OpenStack 上建立的資源。
 在此次 lab 中，我們教學了如何利用 kops 在 OpenStack 上建立一個完整的 Kubernetes cluster。kops 搭建的 cluster 同時也整合了 `cloud-provider-openstack` 的相關功能，讓使用者可以在 cluster 內直接使用 `persistant volume` 和 `load balancer` 等功能。
 
 後續與 Kubernetes 相關的 lab 也會建議利用此方法架設 Kubernetes cluster。
+
+## 附錄
+
+### 加入不同 Flavor 的 Instance
+
+kops 可以透過 instance groups 加入不同 flavor 跟數量的 instance
+
+Instance group 的[範例如下](https://github.com/cloud-native-taiwan/Infra-Labs-Docs/tree/main/attachments/kops/ig.yaml)：
+
+```yaml
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  labels:
+    kops.k8s.io/cluster: <cluster_name>.k8s.local
+  name: nodes-nova-arm
+spec:
+  image: Ubuntu-22.04-aarch64
+  machineType: a1.large
+  maxSize: 1
+  minSize: 1
+  role: Node
+  subnets:
+  - nova
+```
+
+透過以下指令建立 instance group 並且更新 cluster 以建立新的 instance
+
+```bash
+cat ig.yaml | kops create -f -
+
+kops update cluster --name <cluster_name>.k8s.local --yes --admin
+```
+
+新的 Instance 將會被建立然後加入至 cluster 中。

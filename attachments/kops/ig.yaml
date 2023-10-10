@@ -1,0 +1,14 @@
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  labels:
+    kops.k8s.io/cluster: <cluster_name>.k8s.local
+  name: nodes-nova-arm
+spec:
+  image: Ubuntu-22.04-aarch64
+  machineType: a1.large
+  maxSize: 1
+  minSize: 1
+  role: Node
+  subnets:
+  - nova
