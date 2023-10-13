@@ -47,6 +47,18 @@ const sidebars = {
   architecture: [
     'architecture/network',
     'architecture/iaas',
+    {
+      type: 'category',
+      label: 'Admin 專區',
+      link: {
+        type: 'generated-index',
+        description: "Admin 管理相關操作 Cookbook"
+      },
+      items: [
+          'admin/image_build'
+      ]
+    },
+
   ],
   self_paced_labs: [
     'self-paced-labs',
