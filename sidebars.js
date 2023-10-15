@@ -55,7 +55,8 @@ const sidebars = {
         description: "Admin 管理相關操作 Cookbook"
       },
       items: [
-          'admin/image_build'
+          'admin/image_build',
+          'admin/openstack_operation',
       ]
     },
 
