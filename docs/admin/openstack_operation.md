@@ -80,3 +80,27 @@ kolla-ansible -i /etc/kolla/multinode upgrade --ask-vault-pass -v
 ## 新增/移除節點 {#adding-and-removing-hosts}
 
 新增移除節點請參考[官方文件](https://docs.openstack.org/kolla-ansible/latest/user/adding-and-removing-hosts.html)
+
+## 更新憑證 {#update-certificate}
+
+Infra Labs 的憑證使用 [Let's Encrypt](https://letsencrypt.org/) 生成，預設有效期間為三個月，因此每三個月需要更新一次。
+
+安裝所需要的元件：
+
+```bash
+pip install certbot
+pip install certbot-dns-cloudflare
+```
+
+產生新憑證：
+
+```bash
+certbot certonly --dns-cloudflare --dns-cloudflare-credentials /home/igene/.certbot/cloudflare.ini -d '*.cloudnative.tw' --preferred-challenges dns-0
+```
+
+將產生的新憑證更新至 `haproxy`：
+
+```bash
+sudo cat /etc/letsencrypt/live/cloudnative.tw/fullchain.pem /etc/letsencrypt/live/cloudnative.tw/privkey.pem > /etc/kolla/certificates/haproxy.pem
+kolla-ansible -i /etc/kolla/multinode reconfigure --ask-vault-pass -v -t haproxy
+```
