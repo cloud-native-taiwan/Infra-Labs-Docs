@@ -43,8 +43,8 @@ for i in $(cat kolla_list); do sudo docker manifest rm 192.168.0.1:80/kolla/$i:2
 建立新的 manifest 然後 push 至 Harbor
 
 ```bash
-for i in $(cat kolla_list); do sudo docker manifest create --insecure 192.168.0.10:5000/kolla/$i:2023.1 --amend 192.168.0.10:5000/kolla/$i:2023.1-arm64 --amend 192.168.0.10:5000/kolla/$i:2023.1-amd64; done
-for i in $(cat kolla_list); do sudo docker manifest push --insecure 192.168.0.10:5000/kolla/$i:2023.1; done`
+for i in $(cat kolla_list); do sudo docker manifest create --insecure 192.168.0.1:5000/kolla/$i:2023.1 --amend 192.168.0.1:5000/kolla/$i:2023.1-arm64 --amend 192.168.0.1:5000/kolla/$i:2023.1-amd64; done
+for i in $(cat kolla_list); do sudo docker manifest push --insecure 192.168.0.1:5000/kolla/$i:2023.1; done`
 ```
 
 成功後，docker pull 將會根據 host 的 CPU 架構 pull 對應架構的 image。
