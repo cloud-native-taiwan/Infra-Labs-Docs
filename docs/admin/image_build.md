@@ -15,8 +15,8 @@ Infra Labs 目前使用的 Kolla Image 並未進行任何修改，可以按照[�
 編譯的指令如下：
 
 ```bash
-kolla-build -b ubuntu --registry 192.168.0.1:80 --push --tag 2023.1-amd64
-kolla-build -b ubuntu --registry 192.168.0.1:80 --push --tag 2023.1-arm64
+kolla-build -b ubuntu --registry registry.cloudnative.tw --push --tag <version>-amd64
+kolla-build -b ubuntu --registry registry.cloudnative.tw --push --tag <version>-arm64
 ```
 
 根據不同的架構上不同的 Image Tag
@@ -31,20 +31,20 @@ kolla-build -b ubuntu --registry 192.168.0.1:80 --push --tag 2023.1-arm64
 接下來登入使用的 Harbor Registry，已經登入過後可以跳過此步驟：
 
 ```bash
-docker login 192.168.0.1:80
+docker login registry.cloudnative.tw
 ```
 
 將舊的 manifest 刪除
 
 ```bash
-for i in $(cat kolla_list); do sudo docker manifest rm 192.168.0.1:80/kolla/$i:2023.1; done
+for i in $(cat kolla_list); do sudo docker manifest rm registry.cloudnative.tw/kolla/$i:<version>; done
 ```
 
 建立新的 manifest 然後 push 至 Harbor
 
 ```bash
-for i in $(cat kolla_list); do sudo docker manifest create --insecure 192.168.0.1:5000/kolla/$i:2023.1 --amend 192.168.0.1:5000/kolla/$i:2023.1-arm64 --amend 192.168.0.1:5000/kolla/$i:2023.1-amd64; done
-for i in $(cat kolla_list); do sudo docker manifest push --insecure 192.168.0.1:5000/kolla/$i:2023.1; done`
+for i in $(cat kolla_list); do sudo docker manifest create --insecure registry.cloudnative.tw/kolla/$i:<version> --amend registry.cloudnative.tw/kolla/$i:<version>-arm64 --amend registry.cloudnative.tw/kolla/$i:<version>-amd64; done
+for i in $(cat kolla_list); do sudo docker manifest push --insecure registry.cloudnative.tw/kolla/$i:<version>; done`
 ```
 
 成功後，docker pull 將會根據 host 的 CPU 架構 pull 對應架構的 image。
