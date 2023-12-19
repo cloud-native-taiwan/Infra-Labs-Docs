@@ -4,7 +4,7 @@ description: ""
 
 # Quarkus 整合 Vault 與 Secrets Store CSI Driver
 
-Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑證、密碼等。再者要存取這些資訊都是要經過一層身份驗證才能獲取儲存在 Vault 服務上的機密資訊。專案整合 Vault 服務能夠降低敏感數據暴露風險、集中管理提高生產效率等。本文章會透過第三方工具整合 Vault 實現無入侵程式碼，其優勢可以將不熟悉的專案進行整合。
+Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑證、密碼等。再者要存取這些資訊都要經過一層身份驗證才能獲取儲存在 Vault 服務上的機密資訊。專案整合 Vault 服務能夠降低敏感數據暴露風險、集中管理提高生產效率等。本文章會透過第三方工具整合 Vault 實現無入侵程式碼，其優勢可以將不熟悉的專案進行整合。
 
 此文章會學習到
 
@@ -22,6 +22,8 @@ Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑�
 - Helm version: v3.11.3
 - Vault chart version: 0.26.1
 - Secret Store CSI chart version: 1.4.0 
+
+本實驗環境的建置可應用於標準 Kubernetes 集群。本實驗所使用的專案[連接](https://github.com/CCH0124/vault-with-quarkus/tree/d939a7b057bf7688b9ee6162fe2cf4fa0365db9d/secret-csi-vault)。
 
 ## 建立環境
 
@@ -124,7 +126,7 @@ existing unseal keys shares. See "vault operator rekey" for more information.
 
 ## 建置 Quarkus Kubernetes 集群
 
-配置 Quarkus Kubernetes 集群，對應本實驗[專案](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/secret-csi-vault/k3d/config.yaml)
+配置 Quarkus Kubernetes 集群，對應本實驗[專案](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/secret-csi-vault/k3d/config.yaml)。
 
 ```yaml
 apiVersion: k3d.io/v1alpha4
@@ -162,9 +164,7 @@ $ k3d cluster create -c config.yaml --servers-memory 2GB --agents-memory 2GB
 
 ## Kubernetes 集群整合 Vault 服務
 
-Quarkus 專案會部署至 Quarkus Kubernetes 集群，但 Vault 服務為另一個叫 vault-cluster 的環境。下面將會演飾如何從 Vault 配置基於 Kubernetes 的認證，以讓 quarkus 服務能夠存取。
-
-配置 Vault Kubernetes 認證
+Quarkus 專案會部署至 Quarkus Kubernetes 集群，但 Vault 服務為另一個叫 vault-cluster 的環境。下面將會演飾如何從 Vault 配置基於 Kubernetes 的認證，以讓 quarkus-cluster 中 quarkus 應用程式存取。
 
 在 quarkus-cluster 集群中手動建置一個給 `ServiceAccount` 的長期 API 令牌，並透過 `kubernetes.io/service-account.name` 建立一個新 `Secret` 物件，內容包含 `ca.crt`、`token` 等欄位。有關手動建立長期令牌可參閱[官方](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount)。
 
@@ -200,7 +200,7 @@ subjects:
 
 透過 `kubernetes.io/service-account-token` 建立的長期令牌將賦予給 Vault 服務並與 quarkus-cluster 交互。如果使用短期令牌，一旦 POD 或 `ServiceAccount` 被刪除 Kubernetes 就會撤銷它，或者如果令牌過期後，Vault 將無法再使用該令牌與 kubernetes API。但，長期令牌沒有短期令牌的安全性，但兩方式都能整合。
 
-配置給 Vault 驗證 quarkus-cluster 資訊。`K8S_HOST` 對於本範例來說會有網路問題，因此會使用 k3d 建置出來的 `serverlb` 容器 IP 位置。至於能夠通訊是透過 `network: vault-net` 配置。下面為實驗步驟：
+配置給 Vault 驗證 quarkus-cluster 資訊。`K8S_HOST` 對於本範例來說會有環境上網路路由問題，因此會使用 k3d 建置出來的 `serverlb` 容器 IP 位置。至於能夠通訊是透過 `network: vault-net` 配置。下面為實驗步驟：
 
 1. 登入 Vault
 
@@ -325,7 +325,7 @@ quarkus.vault.authentication.kubernetes.auth-mount-path=auth/quarkus-cluster
 quarkus.vault.authentication.kubernetes.role=quarkus-vault
 ```
 
-本範例的 Quarkus 應用程式成功連線後，在 Vault 服務可以看到其日誌。
+本範例的 Quarkus 應用程式成功連線後，在 Vault 服務可以看到其日誌。POD 中容器應用程式將透過 Vault API `/v1/auth/quarkus-cluster/login` 進行登入，並驗證來自 `serviceAccount` 令牌，成功後再透過 Vault API `/v1/kv/data/quarkus/vault-demo` 獲取 `secrets` 資源。
 
 ```bash
 {"@level":"debug","@message":"completed_request","@module":"core","@timestamp":"2023-12-06T11:33:22.628656Z","client_address":"10.42.2.1","client_id":"","duration":"2ms","request_method":"POST","request_path":"/v1/auth/quarkus-cluster/login","start_time":"2023-12-06T11:33:22Z","status_code":200}
@@ -638,7 +638,7 @@ FIELDS:
 本章透過單一 Vault 服務整合多個集群，並整合 Kubernetes 身份驗證來讓 Vault 存取 Kubernetes 集群，同樣的 Vault 支援多種認證，可依照場景進行整合。最後透過 Secrets Store CSI Driver 方式實現無侵入方式讓應用程式與 Vault 進行整合。雖然目前對於自動更新支援度不是很好，但該功能透過社群會逐漸穩定，但其對於不熟悉專案與 Vault 整合是一個好的方式。當然，`Secrets Store CSI Driver` 並非是一種唯一的解決方案，會選擇也許是容易理解、配置容易。
 
 
-## 參考資源
+## 參考資料
 
 - [hashicorp Vault - auth kubernetes](https://developer.hashicorp.com/vault/docs/auth/kubernetes)
 - [secrets store csi driver](https://secrets-store-csi-driver.sigs.k8s.io/)
