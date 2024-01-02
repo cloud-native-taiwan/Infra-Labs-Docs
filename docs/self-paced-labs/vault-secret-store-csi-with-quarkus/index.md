@@ -29,7 +29,7 @@ Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑�
 
 ### Vault 服務
 
-宣告 K3d 配置
+宣告 K3d 設定
 
 ```yaml
 # config.yaml
@@ -60,7 +60,7 @@ options:
           - server:*
 ```
 
-使用上述配置建立模擬 kubernetes 環境
+使用上述設定檔建立模擬 kubernetes 環境
 
 ```bash
 k3d cluster create --servers-memory 3G  --agents-memory 3G -c config.yaml
@@ -126,7 +126,7 @@ existing unseal keys shares. See "vault operator rekey" for more information.
 
 ## 建置 Quarkus Kubernetes 集群
 
-配置 Quarkus Kubernetes 集群，對應本實驗[專案](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/secret-csi-vault/k3d/config.yaml)。
+設定 Quarkus Kubernetes 集群，對應本實驗[專案](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/secret-csi-vault/k3d/config.yaml)。
 
 ```yaml
 apiVersion: k3d.io/v1alpha4
@@ -164,7 +164,7 @@ $ k3d cluster create -c config.yaml --servers-memory 2GB --agents-memory 2GB
 
 ## Kubernetes 集群整合 Vault 服務
 
-Quarkus 專案會部署至 Quarkus Kubernetes 集群，但 Vault 服務為另一個叫 vault-cluster 的環境。下面將會演飾如何從 Vault 配置基於 Kubernetes 的認證，以讓 quarkus-cluster 中 quarkus 應用程式存取。
+Quarkus 專案會部署至 Quarkus Kubernetes 集群，但 Vault 服務為另一個叫 vault-cluster 的環境。下面將會示範如何從 Vault 設定基於 Kubernetes 的認證，以讓 quarkus-cluster 中 quarkus 應用程式存取。
 
 在 quarkus-cluster 集群中手動建置一個給 `ServiceAccount` 的長期 API 令牌，並透過 `kubernetes.io/service-account.name` 建立一個新 `Secret` 物件，內容包含 `ca.crt`、`token` 等欄位。有關手動建立長期令牌可參閱[官方](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount)。
 
@@ -198,7 +198,7 @@ subjects:
   namespace: default
 ```
 
-透過 `kubernetes.io/service-account-token` 建立的長期令牌將賦予給 Vault 服務並與 quarkus-cluster 交互。如果使用短期令牌，一旦 POD 或 `ServiceAccount` 被刪除 Kubernetes 就會撤銷它，或者如果令牌過期後，Vault 將無法再使用該令牌與 kubernetes API。但，長期令牌沒有短期令牌的安全性，但兩方式都能整合。
+透過 `kubernetes.io/service-account-token` 建立的長期令牌將賦予給 Vault 服務並與 quarkus-cluster 互動。如果使用短期令牌，一旦 Pod 或 `ServiceAccount` 被刪除 Kubernetes 就會撤銷它，或者如果令牌過期後，Vault 將無法再使用該令牌與 kubernetes API。但，長期令牌沒有短期令牌的安全性，但兩方式都能整合。
 
 配置給 Vault 驗證 quarkus-cluster 資訊。`K8S_HOST` 對於本範例來說會有環境上網路路由問題，因此會使用 k3d 建置出來的 `serverlb` 容器 IP 位置。至於能夠通訊是透過 `network: vault-net` 配置。下面為實驗步驟：
 
@@ -300,7 +300,7 @@ path "kv/data/quarkus/vault-demo" {
 vault policy write quarkus policy.hcl
 ```
 
-最後透過部署 Quarkus 資源驗證，部署檔案透過此[鏈接](https://github.com/CCH0124/vault-with-quarkus/blob/main/secret-csi-vault/k8s/deployment.yaml)獲取檔案部署。
+最後透過部署 Quarkus 資源驗證，部署檔案透過此[連結](https://github.com/CCH0124/vault-with-quarkus/blob/main/secret-csi-vault/k8s/deployment.yaml)取得。
 
 ```bash
 # 在 quarkus-cluster 部署
@@ -313,7 +313,7 @@ $ curl -k https://app.cch.com:8451/info
 {"message":"vault hello!"}
 ```
 
-到這邊可以知道如何透過一個 Vault 服務整合外部的 Kubernetes。並透過 Quarkus 框架所提供的 Vault API 進行交互，配置如下。
+到這邊可以知道如何透過一個 Vault 服務整合外部的 Kubernetes。並透過 Quarkus 框架所提供的 Vault API 進行互動，設定如下。
 
 ```bash
 quarkus.tls.trust-all=true
@@ -325,7 +325,7 @@ quarkus.vault.authentication.kubernetes.auth-mount-path=auth/quarkus-cluster
 quarkus.vault.authentication.kubernetes.role=quarkus-vault
 ```
 
-本範例的 Quarkus 應用程式成功連線後，在 Vault 服務可以看到其日誌。POD 中容器應用程式將透過 Vault API `/v1/auth/quarkus-cluster/login` 進行登入，並驗證來自 `serviceAccount` 令牌，成功後再透過 Vault API `/v1/kv/data/quarkus/vault-demo` 獲取 `secrets` 資源。
+本範例的 Quarkus 應用程式成功連線後，在 Vault 服務可以看到其日誌。Pod 中容器應用程式將透過 Vault API `/v1/auth/quarkus-cluster/login` 進行登入，並驗證來自 `serviceAccount` 令牌，成功後再透過 Vault API `/v1/kv/data/quarkus/vault-demo` 獲取 `secrets` 資源。
 
 ```bash
 {"@level":"debug","@message":"completed_request","@module":"core","@timestamp":"2023-12-06T11:33:22.628656Z","client_address":"10.42.2.1","client_id":"","duration":"2ms","request_method":"POST","request_path":"/v1/auth/quarkus-cluster/login","start_time":"2023-12-06T11:33:22Z","status_code":200}
@@ -343,7 +343,7 @@ helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets
 helm install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver --version 1.4.0 --namespace kube-system --set syncSecret.enabled=true
 ```
 
-安裝完後每個節點都會有一個 POD，該 POD 是由 `DaemonSet` 所產生。
+安裝完後每個節點都會有一個 Pod，該 Pod 是由 `DaemonSet` 所產生。
 
 ```bash
 $ kubectl get pods -A -l app.kubernetes.io/instance=csi-secrets-store -o wide
@@ -352,7 +352,7 @@ kube-system   csi-secrets-store-secrets-store-csi-driver-ss22c   3/3     Running
 kube-system   csi-secrets-store-secrets-store-csi-driver-vg547   3/3     Running   0          3h38m   10.42.0.4   k3d-quarkus-cluster-agent-0    <none>           <none>
 ```
 
-安裝 [vault-csi-provider](https://github.com/hashicorp/vault-csi-provider)，以讓 Secrets Store CSI 取得儲存在 Vault 中的資訊，並使用 Secrets Store CSI 介面將它們掛載到 Kubernetes POD 中。
+安裝 [vault-csi-provider](https://github.com/hashicorp/vault-csi-provider)，以讓 Secrets Store CSI 取得儲存在 Vault 中的資訊，並使用 Secrets Store CSI 介面將它們掛載到 Kubernetes Pod 中。
 
 使用 Helm 安裝 Vault 的 CSI 介面。
 
@@ -360,7 +360,7 @@ kube-system   csi-secrets-store-secrets-store-csi-driver-vg547   3/3     Running
 helm install vault hashicorp/vault --version 0.26.1 --namespace vault --create-namespace  --set "server.enabled=false" --set "injector.enabled=false" --set "csi.enabled=true"
 ```
 
-如果不安裝 vault-csi-provider，則會導致 Secrets Store CSI 介面不知道如何整合 Vault，在啟動 POD 時會出現以下訊息 `provider not found: provider "vault"`。
+如果不安裝 vault-csi-provider，則會導致 Secrets Store CSI 介面不知道如何整合 Vault，在啟動 Pod 時會出現以下訊息 `provider not found: provider "vault"`。
 
 ```bash
   Warning  FailedMount  22m (x13 over 32m)    kubelet            MountVolume.SetUp failed for volume "vault-secret-env" : rpc error: code = Unknown desc = failed to mount secrets store objects for pod default/secret-csi-vault-7b98fd57d5-5kxfw, err: error connecting to provider "vault": provider not found: provider "vault"
@@ -369,7 +369,7 @@ helm install vault hashicorp/vault --version 0.26.1 --namespace vault --create-n
 
 該 Secret store CSI 還能夠整合其它第三方服務可參考[官方資訊](https://secrets-store-csi-driver.sigs.k8s.io/providers)。本實驗會整合 Vault。
 
-首先礙於 K3d 建立環境，這邊 Vault 使用 NodePort 方式將 Vault 服務給導出。讀者如有不用 ＮodePort 方式，在不吝嗇分享。
+首先礙於 K3d 建立環境，這邊 Vault 使用 NodePort 方式將 Vault 服務給導出。讀者如有不用 NodePort 方式，在不吝嗇分享。
 
 ```bash
 $ kubectl get svc -n vault
@@ -394,7 +394,7 @@ k3d-vault-cluster-agent-0    Ready    <none>                 18h   v1.27.7+k3s1 
 ![](images/vault-integrate-k8s.png)
 
 1. 在 Vault 設置從 vault-auth 來的令牌、Kubernetes API 位置
-2. 將 POD 建立的 ServiceAccount 令牌掛載至容器中
+2. 將 Pod 建立的 ServiceAccount 令牌掛載至容器中
 3. Quarkus 透過 ServiceAccount 令牌呼叫 `/v1/auth/quarkus-cluster/login` 進行驗證
 4. Vault 呼叫 `quarkus-cluster` 所設定的 Kubernetes API 位置呼叫 tokenReview API 驗證令牌合法性
 5. Vault 回傳令牌
@@ -405,7 +405,7 @@ k3d-vault-cluster-agent-0    Ready    <none>                 18h   v1.27.7+k3s1 
 
 ### 使用 ENV 方式宣告
 
-建立一個可透過 Secret Store CSI 提供的 CRD 來存取 Vault 中 KV 資源。預設上，KV 資源丟什麼值就取什麼值。
+建立一個可透過 Secrets Store CSI 提供的 CRD 來存取 Vault 中 KV 資源。預設上，KV 資源丟什麼值就取什麼值。
 
 ```yaml
 # ENV base
@@ -570,9 +570,9 @@ $ curl -v -k -XPOST --form client=@end-entity.crt https://app.cch.com:8451
 * Connection #0 to host app.cch.com left intact
 ```
 
-上面 ENV 或 FILE 簡易的流程是 kubelet 在 POD volume 掛載期間調用 CSI 驅動程式。因此，在 POD 啟動後，後續更改不會觸發對該掛載或 Kubernetes 金鑰中內容的更新。那這可能是用第三方套件像是 [Reloader](https://github.com/stakater/Reloader) 或是應用程式自行實現。
+上面 ENV 或 FILE 簡易的流程是 kubelet 在 Pod volume 掛載期間調用 CSI 驅動程式。因此，在 Pod 啟動後，後續更改不會觸發對該掛載或 Kubernetes 金鑰中內容的更新。那這可能是用第三方套件像是 [Reloader](https://github.com/stakater/Reloader) 或是應用程式自行實現。
 
-如果上面範例配置有像是找不到 Vault 中定義的 Key 問題則 POD 會處於 ContainerCreating 狀態，如下
+如果上面範例配置有像是找不到 Vault 中定義的 Key 問題則 Pod 會處於 ContainerCreating 狀態，如下
 
 ```bash
 $ kubectl get pods -w
@@ -583,7 +583,7 @@ $ kubectl describe pods secret-csi-vault-7b98fd57d5-gmvw6
   Warning  FailedMount  52s (x8 over 116s)  kubelet            MountVolume.SetUp failed for volume "vault-secret-file" : rpc error: code = Unknown desc = failed to mount secrets store objects for pod default/secret-csi-vault-7b98fd57d5-gmvw6, err: rpc error: code = Unknown desc = error making mount request: {kv/data/quarkus/vault-demo}: {key "fullchain.crt" does not exist at the secret path}
 ```
 
-Secrets Store CSI Driver 官方提供了下圖架構圖。kubelet 會呼叫 Secrets Store CSI Driver，在透過 `SecretProviderClass` 檢索內容。不過其會隨著 POD 的刪除而刪除，但這不見得是壞事，畢竟資源它幫你清，減少垃圾資源的存在。更多的細節可至官方進行[翻閱](https://secrets-store-csi-driver.sigs.k8s.io/concepts)。
+Secrets Store CSI Driver 官方提供了下圖架構圖。kubelet 會呼叫 Secrets Store CSI Driver，在透過 `SecretProviderClass` 檢索內容。不過其會隨著 Pod 的刪除而刪除，但這不見得是壞事，畢竟資源它幫你清，減少垃圾資源的存在。更多的細節可至官方進行[翻閱](https://secrets-store-csi-driver.sigs.k8s.io/concepts)。
 
 ![](https://camo.githubusercontent.com/e7f39411f46e3d71c3e64076764fc4f21230d5e28cb3d0faf868c38dea74a7f2/68747470733a2f2f736563726574732d73746f72652d6373692d6472697665722e736967732e6b38732e696f2f696d616765732f6469616772616d2e706e67)
 
