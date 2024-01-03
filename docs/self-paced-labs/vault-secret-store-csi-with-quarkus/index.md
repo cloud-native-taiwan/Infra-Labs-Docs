@@ -23,7 +23,7 @@ Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑�
 - Vault chart version: 0.26.1
 - Secret Store CSI chart version: 1.4.0 
 
-本實驗環境的建置可應用於標準 Kubernetes 集群。本實驗所使用的專案[連接](https://github.com/CCH0124/vault-with-quarkus/tree/d939a7b057bf7688b9ee6162fe2cf4fa0365db9d/secret-csi-vault)。
+本實驗環境的建置可應用於標準 Kubernetes 叢集。本實驗所使用的專案[連接](https://github.com/CCH0124/vault-with-quarkus/tree/d939a7b057bf7688b9ee6162fe2cf4fa0365db9d/secret-csi-vault)。
 
 ## 建立環境
 
@@ -124,9 +124,9 @@ It is possible to generate new unseal keys, provided you have a quorum of
 existing unseal keys shares. See "vault operator rekey" for more information.
 ```
 
-## 建置 Quarkus Kubernetes 集群
+## 建置 Quarkus Kubernetes 叢集
 
-設定 Quarkus Kubernetes 集群，對應本實驗[專案](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/secret-csi-vault/k3d/config.yaml)。
+設定 Quarkus Kubernetes 叢集，對應本實驗[專案](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/secret-csi-vault/k3d/config.yaml)。
 
 ```yaml
 apiVersion: k3d.io/v1alpha4
@@ -162,11 +162,11 @@ $ k3d cluster create -c config.yaml --servers-memory 2GB --agents-memory 2GB
 
 本實驗專案是透過 Quarkus 框架來整合 Vault。
 
-## Kubernetes 集群整合 Vault 服務
+## Kubernetes 叢集整合 Vault 服務
 
-Quarkus 專案會部署至 Quarkus Kubernetes 集群，但 Vault 服務為另一個叫 vault-cluster 的環境。下面將會示範如何從 Vault 設定基於 Kubernetes 的認證，以讓 quarkus-cluster 中 quarkus 應用程式存取。
+Quarkus 專案會部署至 Quarkus Kubernetes 叢集，但 Vault 服務為另一個叫 vault-cluster 的環境。下面將會示範如何從 Vault 設定基於 Kubernetes 的認證，以讓 quarkus-cluster 中 quarkus 應用程式存取。
 
-在 quarkus-cluster 集群中手動建置一個給 `ServiceAccount` 的長期 API 令牌，並透過 `kubernetes.io/service-account.name` 建立一個新 `Secret` 物件，內容包含 `ca.crt`、`token` 等欄位。有關手動建立長期令牌可參閱[官方](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount)。
+在 quarkus-cluster 叢集中手動建置一個給 `ServiceAccount` 的長期 API 令牌，並透過 `kubernetes.io/service-account.name` 建立一個新 `Secret` 物件，內容包含 `ca.crt`、`token` 等欄位。有關手動建立長期令牌可參閱[官方](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount)。
 
 ```yaml
 apiVersion: v1
@@ -200,7 +200,7 @@ subjects:
 
 透過 `kubernetes.io/service-account-token` 建立的長期令牌將賦予給 Vault 服務並與 quarkus-cluster 互動。如果使用短期令牌，一旦 Pod 或 `ServiceAccount` 被刪除 Kubernetes 就會撤銷它，或者如果令牌過期後，Vault 將無法再使用該令牌與 kubernetes API。但，長期令牌沒有短期令牌的安全性，但兩方式都能整合。
 
-配置給 Vault 驗證 quarkus-cluster 資訊。`K8S_HOST` 對於本範例來說會有環境上網路路由問題，因此會使用 k3d 建置出來的 `serverlb` 容器 IP 位置。至於能夠通訊是透過 `network: vault-net` 配置。下面為實驗步驟：
+設定給 Vault 驗證 quarkus-cluster 資訊。`K8S_HOST` 對於本範例來說會有環境上網路路由問題，因此會使用 k3d 建置出來的 `serverlb` 容器 IP 位置。至於能夠通訊是透過 `network: vault-net` 設定。下面為實驗步驟：
 
 1. 登入 Vault
 
@@ -210,7 +210,7 @@ export VAULT_SKIP_VERIFY=true
 vault login -tls-skip-verify hvs.2fVKDYNbdS1kxa186pWZuDWn
 ```
 
-2. 建置配置給 Vault 驗證的資訊
+2. 建置設定給 Vault 驗證的資訊
 
 ```bash
 export SA_JWT_TOKEN=$(kubectl get secret  vault-auth -o jsonpath="{ .data.token }" | base64 --decode; echo)
@@ -225,7 +225,7 @@ $ vault auth enable --path=quarkus-cluster kubernetes
 Success! Enabled kubernetes auth method at: quarkus-clust
 ```
 
-4. 配置 quarkus-cluster 認證
+4. 設定 quarkus-cluster 認證
 
 ```bash
 $ vault write auth/quarkus-cluster/config token_reviewer_jwt=$SA_JWT_TOKEN kubernetes_host=https://172.20.0.6:6443 kubernetes_ca_cert="$(cat ca.crt)"
@@ -572,7 +572,7 @@ $ curl -v -k -XPOST --form client=@end-entity.crt https://app.cch.com:8451
 
 上面 ENV 或 FILE 簡易的流程是 kubelet 在 Pod volume 掛載期間調用 CSI 驅動程式。因此，在 Pod 啟動後，後續更改不會觸發對該掛載或 Kubernetes 金鑰中內容的更新。那這可能是用第三方套件像是 [Reloader](https://github.com/stakater/Reloader) 或是應用程式自行實現。
 
-如果上面範例配置有像是找不到 Vault 中定義的 Key 問題則 Pod 會處於 ContainerCreating 狀態，如下
+如果上面範例設定有像是找不到 Vault 中定義的 Key 問題則 Pod 會處於 ContainerCreating 狀態，如下
 
 ```bash
 $ kubectl get pods -w
@@ -587,6 +587,8 @@ Secrets Store CSI Driver 官方提供了下圖架構圖。kubelet 會呼叫 Secr
 
 ![](https://camo.githubusercontent.com/e7f39411f46e3d71c3e64076764fc4f21230d5e28cb3d0faf868c38dea74a7f2/68747470733a2f2f736563726574732d73746f72652d6373692d6472697665722e736967732e6b38732e696f2f696d616765732f6469616772616d2e706e67)
 
+
+對於 Secrets Store CSI Driver 基本上支援所有 Kubernetes Secret 類型，個人覺得將私有鏡像存取的令牌使用 base64 編碼並將其整合至 Vault，最後使用 Secrets Store CSI Driver 將其私有鏡像存取的令牌進行抓取並載入至 Pod 讓其生命週期由 Secrets Store CSI Driver 進行控管，這樣減少了不必要的資訊洩漏。
 
 到這邊很清楚的知道 `SecretProviderClass` CRD 進行定義，其提供了介面給第三方界接。透過下面 `kubectl explain` 來看，其提供 `parameters` 給第三方進行串接，因此每個實作的第三方都會定義的不同。
 
@@ -612,7 +614,7 @@ FIELDS:
     <no description>
 ```
 
-實際上本文章範例定義的 `parameters`，是透過 Vault 官方的規範進行配置，下面 parameters 下描述的欄位都參考至 Vault 針對於 CSI 的[配置](https://developer.hashicorp.com/vault/docs/platform/k8s/csi/configurations)。這邊下面針對上面的實驗內容進行簡易的配置描述。
+實際上本文章範例定義的 `parameters`，是透過 Vault 官方的規範進行設定，下面 parameters 下描述的欄位都參考至 Vault 針對於 CSI 的[設定](https://developer.hashicorp.com/vault/docs/platform/k8s/csi/configurations)。這邊下面針對上面的實驗內容進行簡易的設定描述。
 
 ```yaml
 ...
@@ -632,11 +634,9 @@ FIELDS:
 - vaultAuthMountPath Vault 中定義 auth 的路徑，用於登入時呼叫登入 API 路徑
 - objects 檢索 Vault 資源
 
-
 ## 總結
 
-本章透過單一 Vault 服務整合多個集群，並整合 Kubernetes 身份驗證來讓 Vault 存取 Kubernetes 集群，同樣的 Vault 支援多種認證，可依照場景進行整合。最後透過 Secrets Store CSI Driver 方式實現無侵入方式讓應用程式與 Vault 進行整合。雖然目前對於自動更新支援度不是很好，但該功能透過社群會逐漸穩定，但其對於不熟悉專案與 Vault 整合是一個好的方式。當然，`Secrets Store CSI Driver` 並非是一種唯一的解決方案，會選擇也許是容易理解、配置容易。
-
+本章透過單一 Vault 服務整合多個叢集，並整合 Kubernetes 身份驗證來讓 Vault 存取 Kubernetes 叢集，同樣的 Vault 支援多種認證，可依照場景進行整合。最後透過 Secrets Store CSI Driver 方式實現無侵入方式讓應用程式與 Vault 進行整合。雖然目前對於自動更新支援度不是很好，但該功能透過社群會逐漸穩定，但其對於不熟悉專案與 Vault 整合是一個好的方式。當然，`Secrets Store CSI Driver` 並非是一種唯一的解決方案，會選擇也許是容易理解、設定容易。
 
 ## 參考資料
 
