@@ -8,7 +8,7 @@ Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑�
 
 此文章會學習到
 
-- Vault 服務整合外部 kubernetes
+- Vault 服務整合外部 Kubernetes
 - Secrets Store CSI Driver 整合 Vault
 - 使用 Secrets Store CSI Driver CRDs 宣告資源
 
@@ -21,7 +21,7 @@ Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑�
 - kubectl version: v1.27.1
 - Helm version: v3.11.3
 - Vault chart version: 0.26.1
-- Secret Store CSI chart version: 1.4.0 
+- Secrets Store CSI chart version: 1.4.0 
 
 本實驗環境的建置可應用於標準 Kubernetes 叢集。本實驗所使用的專案[連接](https://github.com/CCH0124/vault-with-quarkus/tree/d939a7b057bf7688b9ee6162fe2cf4fa0365db9d/secret-csi-vault)。
 
@@ -29,7 +29,7 @@ Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑�
 
 ### Vault 服務
 
-宣告 K3d 設定
+宣告 K3d 設定，設定對應本實驗[專案](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/infra/k3d/config.yaml)
 
 ```yaml
 # config.yaml
@@ -60,7 +60,7 @@ options:
           - server:*
 ```
 
-使用上述設定檔建立模擬 kubernetes 環境
+使用上述設定檔建立模擬 Kubernetes 環境
 
 ```bash
 k3d cluster create --servers-memory 3G  --agents-memory 3G -c config.yaml
@@ -198,7 +198,7 @@ subjects:
   namespace: default
 ```
 
-透過 `kubernetes.io/service-account-token` 建立的長期令牌將賦予給 Vault 服務並與 quarkus-cluster 互動。如果使用短期令牌，一旦 Pod 或 `ServiceAccount` 被刪除 Kubernetes 就會撤銷它，或者如果令牌過期後，Vault 將無法再使用該令牌與 kubernetes API。但，長期令牌沒有短期令牌的安全性，但兩方式都能整合。
+透過 `kubernetes.io/service-account-token` 建立的長期令牌將賦予給 Vault 服務並與 quarkus-cluster 互動。如果使用短期令牌，一旦 Pod 或 `ServiceAccount` 被刪除 Kubernetes 就會撤銷它，或者如果令牌過期後，Vault 將無法再使用該令牌與 Kubernetes API。但，長期令牌沒有短期令牌的安全性，但兩方式都能整合。
 
 設定給 Vault 驗證 quarkus-cluster 資訊。`K8S_HOST` 對於本範例來說會有環境上網路路由問題，因此會使用 k3d 建置出來的 `serverlb` 容器 IP 位置。至於能夠通訊是透過 `network: vault-net` 設定。下面為實驗步驟：
 
@@ -367,7 +367,7 @@ helm install vault hashicorp/vault --version 0.26.1 --namespace vault --create-n
   Warning  FailedMount  12m (x8 over 30m)     kubelet            Unable to attach or mount volumes: unmounted volumes=[vault-secret-env vault-secret-file], unattached volumes=[], failed to process volumes=[]: timed out waiting for the condition
 ```
 
-該 Secret store CSI 還能夠整合其它第三方服務可參考[官方資訊](https://secrets-store-csi-driver.sigs.k8s.io/providers)。本實驗會整合 Vault。
+該 Secrets store CSI 還能夠整合其它第三方服務可參考[官方資訊](https://secrets-store-csi-driver.sigs.k8s.io/providers)。本實驗會整合 Vault。
 
 首先礙於 K3d 建立環境，這邊 Vault 使用 NodePort 方式將 Vault 服務給導出。讀者如有不用 NodePort 方式，在不吝嗇分享。
 
@@ -401,7 +401,7 @@ k3d-vault-cluster-agent-0    Ready    <none>                 18h   v1.27.7+k3s1 
 6. 透過第 5 步令牌獲取 `/v1/kv/data/quarkus/vault-demo` 的 KV 值
 7. 回傳 KV 值
 
-準備好上面的鍵值對後，將透過 Secret Store CSI 提供的 CRD 進行 Vault 存取宣告，這邊會分成基於 ENV 和 FILE 來做分享。
+準備好上面的鍵值對後，將透過 Secrets Store CSI 提供的 CRD 進行 Vault 存取宣告，這邊會分成基於 ENV 和 FILE 來做分享，部署範例對應本專案[設定](https://raw.githubusercontent.com/CCH0124/vault-with-quarkus/main/secret-csi-vault/k8s/deployment-secret-csi.yaml)。
 
 ### 使用 ENV 方式宣告
 
@@ -456,19 +456,19 @@ quarkus      Opaque                                1      51m
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: GREETING_MESSAGE # 這邊喔
+            - name: GREETING_MESSAGE # 引用名稱為 quarkus-demo-env 的 SecretProviderClass CRD 所建立的 Secret 資源
               valueFrom:
                 secretKeyRef:
                   name: quarkus
                   key: greeting.message
 ...
-          volumeMounts: # 這邊喔
+          volumeMounts:
 ...
           - name: vault-secret-env
-            mountPath: "/mnt/secret s-store"
+            mountPath: "/mnt/secrets-store"
             readOnly: true
 ...
-      volumes: # 這邊喔
+      volumes: # 在 volumes 欄位宣告引用 CSI 介面設定
 ...
       - name: vault-secret-env
         csi:
@@ -636,9 +636,9 @@ FIELDS:
 
 ## 總結
 
-本章透過單一 Vault 服務整合多個叢集，並整合 Kubernetes 身份驗證來讓 Vault 存取 Kubernetes 叢集，同樣的 Vault 支援多種認證，可依照場景進行整合。最後透過 Secrets Store CSI Driver 方式實現無侵入方式讓應用程式與 Vault 進行整合。雖然目前對於自動更新支援度不是很好，但該功能透過社群會逐漸穩定，但其對於不熟悉專案與 Vault 整合是一個好的方式。當然，`Secrets Store CSI Driver` 並非是一種唯一的解決方案，會選擇也許是容易理解、設定容易。
+本章透過單一 Vault 服務整合多個叢集，並整合 Kubernetes 身份驗證來讓 Vault 存取 Kubernetes 叢集，同樣的 Vault 支援多種認證，可依照場景進行整合。最後透過 Secrets Store CSI Driver 方式實現無侵入方式讓應用程式與 Vault 進行整合。雖然目前對於自動更新支援度不是很好，但該功能透過社群會逐漸穩定，但其對於不熟悉專案與 Vault 整合是一個好的方式。當然，Secrets Store CSI Driver 並非是一種唯一的解決方案，會選擇也許是容易理解、設定容易。
 
 ## 參考資料
 
-- [hashicorp Vault - auth kubernetes](https://developer.hashicorp.com/vault/docs/auth/kubernetes)
-- [secrets store csi driver](https://secrets-store-csi-driver.sigs.k8s.io/)
+- [Kubernetes - Auth Methods | Vault | HashiCorp Developer](https://developer.hashicorp.com/vault/docs/auth/kubernetes)
+- [Secrets Store CSI Driver](https://secrets-store-csi-driver.sigs.k8s.io/)
