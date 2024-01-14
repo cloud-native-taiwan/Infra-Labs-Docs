@@ -23,7 +23,7 @@ Vault 是一個可將機密資訊集中化管理的一個平台，不論是憑�
 - Vault chart version: 0.26.1
 - Secrets Store CSI chart version: 1.4.0 
 
-本實驗環境的建置可應用於標準 Kubernetes 叢集。本實驗所使用的專案[連接](https://github.com/CCH0124/vault-with-quarkus/tree/d939a7b057bf7688b9ee6162fe2cf4fa0365db9d/secret-csi-vault)。
+本實驗環境的建置可應用於標準 Kubernetes 叢集。本實驗所使用的專案[連結](https://github.com/CCH0124/vault-with-quarkus/tree/d939a7b057bf7688b9ee6162fe2cf4fa0365db9d/secret-csi-vault)。
 
 ## 建立環境
 
@@ -166,7 +166,7 @@ $ k3d cluster create -c config.yaml --servers-memory 2GB --agents-memory 2GB
 
 Quarkus 專案會部署至 Quarkus Kubernetes 叢集，但 Vault 服務為另一個叫 vault-cluster 的環境。下面將會示範如何從 Vault 設定基於 Kubernetes 的認證，以讓 quarkus-cluster 中 quarkus 應用程式存取。
 
-在 quarkus-cluster 叢集中手動建置一個給 `ServiceAccount` 的長期 API 令牌，並透過 `kubernetes.io/service-account.name` 建立一個新 `Secret` 物件，內容包含 `ca.crt`、`token` 等欄位。有關手動建立長期令牌可參閱[官方](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount)。
+在 quarkus-cluster 叢集中手動建置一個給 `ServiceAccount` 的長期 API 令牌，並透過 `kubernetes.io/service-account.name` 建立一個新 `Secret` 物件，內容包含 `ca.crt`、`token` 等欄位。有關手動建立長期令牌可參閱[官方文件](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-long-lived-api-token-for-a-serviceaccount)。
 
 ```yaml
 apiVersion: v1
