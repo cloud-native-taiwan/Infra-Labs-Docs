@@ -585,8 +585,7 @@ $ kubectl describe pods secret-csi-vault-7b98fd57d5-gmvw6
 
 Secrets Store CSI Driver 官方提供了下圖架構圖。kubelet 會呼叫 Secrets Store CSI Driver，在透過 `SecretProviderClass` 檢索內容。不過其會隨著 Pod 的刪除而刪除，但這不見得是壞事，畢竟資源它幫你清，減少垃圾資源的存在。更多的細節可至官方進行[翻閱](https://secrets-store-csi-driver.sigs.k8s.io/concepts)。
 
-![](https://camo.githubusercontent.com/e7f39411f46e3d71c3e64076764fc4f21230d5e28cb3d0faf868c38dea74a7f2/68747470733a2f2f736563726574732d73746f72652d6373692d6472697665722e736967732e6b38732e696f2f696d616765732f6469616772616d2e706e67)
-
+![](https://secrets-store-csi-driver.sigs.k8s.io/images/diagram.png)
 
 對於 Secrets Store CSI Driver 基本上支援所有 Kubernetes Secret 類型，個人覺得將私有鏡像存取的令牌使用 base64 編碼並將其整合至 Vault，最後使用 Secrets Store CSI Driver 將其私有鏡像存取的令牌進行抓取並載入至 Pod 讓其生命週期由 Secrets Store CSI Driver 進行控管，這樣減少了不必要的資訊洩漏。
 
