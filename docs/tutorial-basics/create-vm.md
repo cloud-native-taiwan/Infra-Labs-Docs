@@ -18,7 +18,7 @@
 - Key Pair
     - 選擇需要 Access VM 的 SSH Key。
 
-建立 VM 後，會自動建立 <VM 名稱>.<專案名稱>.infra.cloudnative.tw 的 DNS record 指至此 VM。
+建立 VM 後，會自動建立 `<VM 名稱>.<專案名稱>.infra.cloudnative.tw` 的 DNS record 指至此 VM。
 
 預設登入帳號：
 

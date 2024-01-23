@@ -127,7 +127,7 @@ export KOPS_STATE_STORE=swift://kops
 
 >  **Note**
 >
-> 請替換指令中 <cluster_name> 跟 <ssh_key_path>
+> 請替換指令中 `<cluster_name>` 跟 `<ssh_key_path>`
 
 ```bash
 kops create cluster \
