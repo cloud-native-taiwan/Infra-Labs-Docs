@@ -99,6 +99,7 @@ const sidebars = {
         'self-paced-labs/vault/index',
         'self-paced-labs/quarkus-with-helm-charts/index',
         'self-paced-labs/vault-secrets-store-csi-with-quarkus/index'
+        'self-paced-labs/prometheus/index',
       ]
     },
   ],
