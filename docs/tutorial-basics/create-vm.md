@@ -24,3 +24,15 @@
 
 - Ubuntu: ubuntu
 - Debian: debian
+
+## VM 類型分別
+
+目前 Infra Labs 提供不同種類的 VM 類型給不同需求的使用者。
+
+根據 VM 所使用的主機 CPU 分為三種類型
+
+- a1: ARM Ampere CPU 
+- d1: AMD Epyc Milan CPU
+- m1: Intel Scalable 2nd Gen CPU
+
+由於指令集的不同，a1 系列 VM 需使用 aarch64 結尾的 OS。
