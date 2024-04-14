@@ -4,7 +4,7 @@
         <title>CNTUG Infra Labs 說明文件 Blog</title>
         <link>https://docs.cloudnative.tw/blog</link>
         <description>CNTUG Infra Labs 說明文件 Blog</description>
-        <lastBuildDate>Wed, 03 Apr 2024 10:45:42 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 14 Apr 2024 02:53:41 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-Hant-TW</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[CNTUG Infra Labs 2023 Recap]]></title>
             <link>https://docs.cloudnative.tw/blog/2023-recap</link>
             <guid>https://docs.cloudnative.tw/blog/2023-recap</guid>
-            <pubDate>Wed, 03 Apr 2024 10:45:42 GMT</pubDate>
+            <pubDate>Sun, 14 Apr 2024 02:53:41 GMT</pubDate>
             <description><![CDATA[2023 年對於 CNTUG Infra Labs 來說是一個挑戰與成長並存的一年。面對資金和使用率的挑戰，我們對架構進行了重大調整並精簡了規模。這篇文章旨在回顧過去一年中 Infra Labs 所經歷的變遷。]]></description>
             <content:encoded><![CDATA[<p>2023 年對於 CNTUG Infra Labs 來說是一個挑戰與成長並存的一年。面對資金和使用率的挑戰，我們對架構進行了重大調整並精簡了規模。這篇文章旨在回顧過去一年中 Infra Labs 所經歷的變遷。</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="軟體更新">軟體更新<a href="https://docs.cloudnative.tw/blog/2023-recap#%E8%BB%9F%E9%AB%94%E6%9B%B4%E6%96%B0" class="hash-link" aria-label="軟體更新的直接連結" title="軟體更新的直接連結">​</a></h2>
@@ -38,7 +38,7 @@
 <p>我們計劃在 2024 年加強宣傳活動，以吸引更多使用者並鼓勵更多人貢獻於開源社群。</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="流程自動化">流程自動化<a href="https://docs.cloudnative.tw/blog/2023-recap#%E6%B5%81%E7%A8%8B%E8%87%AA%E5%8B%95%E5%8C%96" class="hash-link" aria-label="流程自動化的直接連結" title="流程自動化的直接連結">​</a></h3>
 <p>目前的申請和帳號建立過程仍需手動操作。我們希望通過自動化程序來簡化這些流程，減輕管理員的負擔。</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="總結">總結<a href="https://docs.cloudnative.tw/blog/2023-recap#%E7%B8%BD%E7%B5%90" class="hash-link" aria-label="總結的直接連結" title="總結的直接連結">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="總結">總結<a href="https://docs.cloudnative.tw/blog/2023-recap#%E7%B8%BD%E7%B5%90" class="hash-link" aria-label="總結的直接連結" title="總結的直接連��結">​</a></h2>
 <p>儘管今年未使用社群專戶的捐款，Infra Labs 仍成功維持運營，感謝所有成員的支持。我們期待在明年實現更高的使用率和穩定性，並為開源社群創造更大的價值。</p>]]></content:encoded>
             <category>recap</category>
         </item>
