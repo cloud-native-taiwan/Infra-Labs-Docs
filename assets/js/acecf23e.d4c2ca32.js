@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunknew_infra_labs_docs=self.webpackChunknew_infra_labs_docs||[]).push([[7393],{1838:s=>{s.exports=JSON.parse('{"blogBasePath":"/blog","blogTitle":"Blog"}')}}]);
