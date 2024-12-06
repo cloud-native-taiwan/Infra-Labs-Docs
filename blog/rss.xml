@@ -4,7 +4,7 @@
         <title>CNTUG Infra Labs 說明文件 Blog</title>
         <link>https://docs.cloudnative.tw/blog</link>
         <description>CNTUG Infra Labs 說明文件 Blog</description>
-        <lastBuildDate>Sat, 23 Nov 2024 08:27:06 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 06 Dec 2024 03:20:49 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-Hant-TW</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[CNTUG Infra Labs 2023 Recap]]></title>
             <link>https://docs.cloudnative.tw/blog/2023-recap</link>
             <guid>https://docs.cloudnative.tw/blog/2023-recap</guid>
-            <pubDate>Sat, 23 Nov 2024 08:27:06 GMT</pubDate>
+            <pubDate>Fri, 06 Dec 2024 03:20:49 GMT</pubDate>
             <description><![CDATA[2023 年對於 CNTUG Infra Labs 來說是一個挑戰與成長並存的一年。面對資金和使用率的挑戰，我們對架構進行了重大調整並精簡了規模。這篇文章旨在回顧過去一年中 Infra Labs 所經歷的變遷。]]></description>
             <content:encoded><![CDATA[<p>2023 年對於 CNTUG Infra Labs 來說是一個挑戰與成長並存的一年。面對資金和使用率的挑戰，我們對架構進行了重大調整並精簡了規模。這篇文章旨在回顧過去一年中 Infra Labs 所經歷的變遷。</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="軟體更新">軟體更新<a href="https://docs.cloudnative.tw/blog/2023-recap#%E8%BB%9F%E9%AB%94%E6%9B%B4%E6%96%B0" class="hash-link" aria-label="軟體更新的直接連結" title="軟體更新的直接連結">​</a></h2>
