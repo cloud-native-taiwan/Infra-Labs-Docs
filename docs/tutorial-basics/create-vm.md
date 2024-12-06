@@ -31,8 +31,8 @@
 
 根據 VM 所使用的主機 CPU 分為三種類型
 
-- a1: ARM Ampere CPU 
-- d1: AMD Epyc Milan CPU
-- m1: Intel Scalable 2nd Gen CPU
+- a1: ARM Ampere CPU (By Request)
+- d1: AMD Epyc Rome 7282 CPU
+- d2: AMD Epyc Milan 7413 CPU
 
 由於指令集的不同，a1 系列 VM 需使用 aarch64 結尾的 OS。
