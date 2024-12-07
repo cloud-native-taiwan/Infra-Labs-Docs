@@ -103,6 +103,17 @@ const sidebars = {
         'self-paced-labs/prometheus/index',
       ]
     },
+    {
+      type: 'category',
+      label: 'Continuous Delivery',
+      collapsed: true,
+      link: {
+        type: 'generated-index',
+      },
+      items: [
+        'self-paced-labs/argocd-multiple-clusters/index',
+      ]
+    }
   ],
 };
 
