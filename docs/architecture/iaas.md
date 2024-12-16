@@ -1,128 +1,75 @@
 # Infra Labs IaaS 架構
 
-TODO:
-
-- [ ] 加上一些比較特殊設定的介紹
-
 ## 前言
 
-目前 Infra Labs 透過 OpenStack 和 Ceph 來提供 Infrastructure as a Service (IaaS) 服務。本篇會介紹使用的 OpenStack 專案以及 Ceph 的架構。
+Infra Labs 透過 OpenStack 和 Ceph 來提供 Infrastructure as a Service (IaaS) 服務。IaaS 允許使用者透過網路以程式化的方式佈建運算、網路和儲存資源，而無需購買、管理和維護實體伺服器和基礎設施。
 
-設定檔以及一些 Ansible Script 將公開於 [Infra-Labs-Config repository](https://github.com/cloud-native-taiwan/Infra-Labs-Config)。
+OpenStack 是一個開源的雲端運算管理平台，提供了一套工具來管理運算、網路和儲存資源。Ceph 是一個開源的分散式儲存系統，可提供高可靠性和可擴展性的物件、區塊和檔案儲存。
+
+本文將介紹 Infra Labs 的 OpenStack 和 Ceph 架構，包括使用的元件、硬體規格、網路拓撲和自訂設定。詳細設定檔公開於 [Infra-Labs-Config repository](https://github.com/cloud-native-taiwan/Infra-Labs-Config)。
+
+## 架構概覽
+
+上圖展示了 Infra Labs IaaS 的高層架構。使用者透過 Horizon 網頁介面或 OpenStack API 與服務互動。API 請求被發送到對應的 OpenStack 服務，這些服務協調運算節點 (透過 Nova)、網路資源 (透過 Neutron) 和儲存 (透過 Cinder、Glance、Swift)。
+
+Ceph 提供了高可靠性的區塊儲存 (透過 RBD) 給 Nova、Cinder 和 Glance 使用，以及物件儲存 (透過 RGW) 給 Swift 使用。
+
+MariaDB 儲存了 OpenStack 服務的狀態和元資料，而 RabbitMQ 則負責服務間的訊息傳遞。Keepalived 和 HAProxy 提供了高可用性的 API 端點。
 
 ## 硬體
 
-Infra Labs 使用了 9 台伺服器用於提供 IaaS 服務，規格如下：
+Infra Labs 使用了 6 台伺服器來提供 IaaS 服務：
 
-Hostname: `openstack01-03`
-
-- CPU: Intel Xeon Gold 6230R \* 2
-- RAM: 32GB DDR4 2933Mhz ECC RDIMM \* 12
-- NIC: 
-    - on board quad port 1G
-    - Mellanox ConnectX-4 100GbE
-- Disk
-    -  Boot Disk: Intel 730 240GB \* 2 or Sandisk CloudSpeed Eco Gen II 480GB \* 2
-    -  Ceph SSD: Samsung NGSFF PM983 3.84TB
-
-Hostname: `openstack04-05`
-
-- CPU: AMD Epyc 7413
-- RAM: 32GB DDR4 3200Mhz ECC RDIMM \* 8
-- NIC:
-    - on board quad port 1G
-    - Mellanox ConnectX-4 Lx Dual Port 25GbE
-- Disk
-    - Boot Disk: Seagate Enterprise Performance 15K 900GB \* 2
-    - Ceph SSD: Samsung 980 1TB \* 4
-    - Ceph HDD: Seagate X18 16TB
-
-Hostname: `openstack06`
-
-- CPU: Xeon Silver 4110
-- RAM: 32GB DDR4 2666Mhz ECC RDIMM \* 6
-- NIC:
-    - on board dual port 1GbE
-    - Mellanox ConnectX-4 Lx Dual Port 25GbE
-- Disk
-    - Boot Disk: Intel S3500 120GB \* 2
-    - Ceph HDD: Seagate X18 16TB
-
-Hostname: `arm01-03`
-
-- CPU: Ampere eMAG 8180
-- RAM: 32GB DDR4 2400Mhz ECC RDIMM \* 2(arm03 \* 4)
-- NIC:
-    - on board dual port 1GbE
-    - Mellanox ConnectX-4 Lx Dual Port 25GbE
-- Disk
-    - Boot Disk: Intel S3500 120GB
-    - Ceph HDD: Seagate X16 16TB
+| Hostname      | CPU                                              | RAM                             | NIC                                                                 | Boot Disk                                                    | Ceph Disk                                                                        |
+|---------------|--------------------------------------------------|--------------------------------|--------------------------------------------------------------------|------------------------------------------------------------|---------------------------------------------------------------------------------|
+| openstack01-02 | AMD Epyc Rome 7282 * 2                         | 32GB DDR4 2933MHz ECC RDIMM * 16 | On-board dual port 1GbE, Mellanox ConnectX-4 Lx dual port 25GbE | Intel 730 240GB or Sandisk CloudSpeed Eco Gen II 480GB   | KIOXIA CD6 3.84TB, Intel DC S3500 1.6TB                                       |
+| openstack04-05 | AMD Epyc Milan 7413                            | 32GB DDR4 3200MHz ECC RDIMM * 8  | On-board quad port 1GbE, Mellanox ConnectX-4 Lx dual port 25GbE | Seagate Enterprise Performance 15K 900GB * 2              | Samsung NGSFF PM983 3.84TB, Intel DC S3500 1.6TB (openstack05 only), Seagate X18 16TB |
+| openstack06    | Xeon Silver 4110                               | 32GB DDR4 2666MHz ECC RDIMM * 6  | On-board dual port 1GbE, Mellanox ConnectX-4 Lx dual port 25GbE | Intel S3500 120GB * 2                                     | Seagate X18 16TB                                                                 |
+| arm01-03       | Ampere Altra Q80-30 * 2                        | 32GB DDR4 3200MHz ECC RDIMM * 4  | On-board dual port 1GbE, Mellanox ConnectX-4 Lx dual port 25GbE | Samsung PM9A3 512GB                                       | N/A                                                                              |
 
 ## 軟體
 
-### 主機任務分配
+### 主機角色分配
 
-- OpenStack Controller: `openstack01-03`
-- OpenStack Compute: `openstack01-05`
-- Ceph Controller: `openstack01-03`
-- Ceph OSDs: All nodes
-- Monitoring: `openstack06`
+- OpenStack 控制節點：```openstack01,02,04``` 
+- OpenStack 運算節點：```openstack01,02,04,05,arm01```
+- Ceph 控制節點：```openstack01,02,04```
+- Ceph OSD 節點：```openstack01,02,03,04```
 
-### Ansible
+### OpenStack 服務
 
-Ansible 被用來做一些 OS 安裝後的設定，如安裝一些必要軟體、網卡的設定等等。
+Infra Labs 使用以下 OpenStack 服務：
 
-### OpenStack
+部署工具：
+- [Bifrost](https://docs.openstack.org/bifrost/latest/)：裸機部署
+- [Kolla](https://docs.openstack.org/kolla/latest/)：容器化 OpenStack 服務
+- [Kolla-Ansible](https://docs.openstack.org/kolla-ansible/latest/)：使用 Ansible 部署 Kolla
+- [Diskimage-builder](https://docs.openstack.org/diskimage-builder/latest/)：建立客製化的 OS 映像檔
 
-Infra Labs 所使用的 OpenStack 服務有：
+核心服務：
+- [Nova](https://docs.openstack.org/nova/latest/)：運算（虛擬機、裸機）
+- [Neutron](https://docs.openstack.org/neutron/latest/)：網路
+- [Keystone](https://docs.openstack.org/keystone/latest/)：身份驗證
+- [Glance](https://docs.openstack.org/glance/latest/)：映像檔
+- [Cinder](https://docs.openstack.org/cinder/latest/)：區塊儲存
+- [Swift](https://docs.openstack.org/swift/latest/)：物件儲存
+- [Placement](https://docs.openstack.org/placement/latest/)：資源庫存和使用量追蹤
 
-用於部屬主機：
+其他服務：
+- [Heat](https://docs.openstack.org/heat/latest/)：協調多個 OpenStack 服務來部署應用程式
+- [Designate](https://docs.openstack.org/designate/latest/)：DNS 即服務
+- [Octavia](https://docs.openstack.org/octavia/latest/)：負載平衡即服務  
+- [Horizon](https://docs.openstack.org/horizon/latest/)：Web UI
 
-- [Bifrost](https://docs.openstack.org/bifrost/latest/)
-- [Kolla](https://docs.openstack.org/kolla/latest/)
-- [Kolla-Ansible](https://docs.openstack.org/kolla-ansible/latest/)
-- [Diskimage-builder](https://docs.openstack.org/diskimage-builder/latest/)
+### Ceph 服務
 
-用於提供服務：
+Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部署，後端網路使用 25GbE 網卡。
 
-- [Nova](https://docs.openstack.org/nova/latest/)
-- [Neutron](https://docs.openstack.org/neutron/latest/)
-- [Keystone](https://docs.openstack.org/keystone/latest/)
-- [Glance](https://docs.openstack.org/glance/latest/)
-- [Heat](https://docs.openstack.org/heat/latest/)
-- [Cinder](https://docs.openstack.org/cinder/latest/)
-- [Swift](https://docs.openstack.org/swift/latest/)
-- [Designate](https://docs.openstack.org/designate/latest/)
-- [Octavia](https://docs.openstack.org/octavia/latest/)
-- [Placement](https://docs.openstack.org/placement/latest/)
-- [Horizon](https://docs.openstack.org/horizon/latest/)
+提供的服務：
+- RBD：為 Nova、Cinder、Glance 提供區塊儲存
+- RGW：為 Swift 提供物件儲存，並透過 Keystone 認證提供 S3 相容 API
 
-其他 OpenStack 所需元件：
-
-- [MariaDB](https://mariadb.org/)
-- [RabbitMQ](https://www.rabbitmq.com/)
-- [Keepalived](https://github.com/acassen/keepalived)
-- [HAProxy](http://www.haproxy.org/)
-
-詳細設定檔皆公開至[此 Repo](https://github.com/cloud-native-taiwan/Infra-Labs-Config)。
-
-### Ceph
-
-Ceph 使用 [Cephadm](https://docs.ceph.com/en/latest/cephadm/index.html) 部屬，後端網路使用 100G/25G 網卡。
-
-提供的服務有：
-
-- RBD
-    - 提供給 Nova, Cinder, Glance 作為儲存後端。
-- RGW
-    - 提供給 Swift 作為儲存後端，並且透過 Keystone 認證提供 S3 Compatible API。 
-
-目前 Crush Rule 分為兩種：
-
-- replicated_nvme
-    - 使用 NVMe SSD 作為儲存媒介
-- replicated_sata_ssd
-    - 使用 SATA SSD 作為儲存媒介
-- erasure profile main
-    - 4+2 Erasure Coding 作為 S3 儲存池
+目前 Crush Rule 包括：
+- ```replicated_nvme```：使用 NVMe SSD
+- ```replicated_sata_ssd```：使用 SATA SSD  
+- ```replicated_hdd```：使用 HDD
