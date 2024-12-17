@@ -8,6 +8,8 @@
 
 ## 架構總覽
 
+![High Level Network](images/high_level_network.png)
+
 上圖展示了 Infra Labs 網路的整體架構。主要由以下幾個部分組成：
 
 - 路由器：NFX250，負責 NAT、VPN 等功能
