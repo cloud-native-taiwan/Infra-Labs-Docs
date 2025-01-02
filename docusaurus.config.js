@@ -153,7 +153,7 @@ const config = {
               },
               {
                 label: 'Meetup 活動',
-                href: 'https://www.meetup.com/CloudNative-Taiwan/',
+                href: 'https://community.cncf.io/cloud-native-taiwan-user-group/',
               },
             ],
           },
