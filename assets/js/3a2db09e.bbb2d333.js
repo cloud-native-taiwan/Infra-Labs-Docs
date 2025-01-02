@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunknew_infra_labs_docs=self.webpackChunknew_infra_labs_docs||[]).push([[8121],{8070:a=>{a.exports=JSON.parse('{"tags":[{"label":"recap","permalink":"/blog/tags/recap","count":2}]}')}}]);
