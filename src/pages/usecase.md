@@ -28,3 +28,4 @@ title: Use cases 使用案例
 - [言雅 Elegant TW](https://elegant.tw)
 - [Enhance “modmesh” building process with “devenv” and “CNTUG Infra Labs”](https://www.terry.taipei/2023/08/enhance-modmesh-building-process-with-devenv-and-cntug-infra-labs/)
 - [CNCF DevStats Card](https://github.com/tico88612/devstats-card)
+- [新世紀維運戰士：30 天用 Service Mesh 對抗 Kubernetes 使徒](https://ithelp.ithome.com.tw/users/20178725/ironman/8654)
