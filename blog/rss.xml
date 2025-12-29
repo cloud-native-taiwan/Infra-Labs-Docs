@@ -4,10 +4,47 @@
         <title>CNTUG Infra Labs 說明文件 Blog</title>
         <link>https://docs.cloudnative.tw/blog</link>
         <description>CNTUG Infra Labs 說明文件 Blog</description>
-        <lastBuildDate>Thu, 02 Jan 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 29 Dec 2025 02:41:29 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-Hant-TW</language>
+        <item>
+            <title><![CDATA[CNTUG Infra Labs 2025 Recap]]></title>
+            <link>https://docs.cloudnative.tw/blog/2025-recap</link>
+            <guid>https://docs.cloudnative.tw/blog/2025-recap</guid>
+            <pubDate>Mon, 29 Dec 2025 02:41:29 GMT</pubDate>
+            <description><![CDATA[營運概況]]></description>
+            <content:encoded><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="營運概況">營運概況<a href="https://docs.cloudnative.tw/blog/2025-recap#%E7%87%9F%E9%81%8B%E6%A6%82%E6%B3%81" class="hash-link" aria-label="營運概況的直接連結" title="營運概況的直接連結">​</a></h2>
+<p>本年度整體營運維持穩定。在基礎建設維運方面，雖然部分月份面臨電力限制的挑戰，但我們仍持續優化系統環境。軟體部分，我們已順利將 OpenStack 升級至 2025.2 版本，Ceph 升級至 Tentacle 20.2.0，Host OS 亦同步升級至 Debian 13，以確保系統的安全性與效能。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="財務說明">財務說明<a href="https://docs.cloudnative.tw/blog/2025-recap#%E8%B2%A1%E5%8B%99%E8%AA%AA%E6%98%8E" class="hash-link" aria-label="財務說明的直接連結" title="財務說明的直接連結">​</a></h2>
+<p>自更換供應商後，目前的財務狀況維持良好。主要維運者 Ching Kuo 仍持續投入資金支持營運，確保服務不中斷。展望明年，我們預計將根據社群帳戶的實際狀況，申請相關補助經費以減輕營運負擔。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="硬體更新">硬體更新<a href="https://docs.cloudnative.tw/blog/2025-recap#%E7%A1%AC%E9%AB%94%E6%9B%B4%E6%96%B0" class="hash-link" aria-label="硬體更新的直接連結" title="硬體更新的直接連結">​</a></h2>
+<p>受近期 AI 熱潮（AI boom）影響，記憶體與伺服器相關產品價格大幅上漲，因此短期內暫無大規模硬體更新計畫。儘管如此，我們今年仍新增了一張 <strong>Tesla T10 16GB GPU</strong>，開放有 GPU 運算需求的使用者申請使用。</p>
+<p>另外，考量到電力配置效率以及目前尚未有使用者提出 arm64 架構 VM 的迫切需求，我們決定將 ARM 節點暫時關機並移出叢集。若未來使用者有相關需求，我們隨時能快速將其重新上線。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="資源共享">資源共享<a href="https://docs.cloudnative.tw/blog/2025-recap#%E8%B3%87%E6%BA%90%E5%85%B1%E4%BA%AB" class="hash-link" aria-label="資源共享的直接連結" title="資源共享的直接連結">​</a></h2>
+<p>平台目前仍備有充足的運算資源，致力於支持開源生態發展：</p>
+<ul>
+<li><strong>長期支援</strong>：歡迎各開源社群申請長期使用。</li>
+<li><strong>免費環境</strong>：提供免費的 IaaS 基礎設施環境。</li>
+<li><strong>專案支持</strong>：全力支援各類專案的開發與測試需求。</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2025-傑出使用者">2025 傑出使用者<a href="https://docs.cloudnative.tw/blog/2025-recap#2025-%E5%82%91%E5%87%BA%E4%BD%BF%E7%94%A8%E8%80%85" class="hash-link" aria-label="2025 傑出使用者的直接連結" title="2025 傑出使用者的直接連結">​</a></h2>
+<p>2025 年，我們很高興看到使用者 marvelshan 利用 Infra Labs 的資源參與了 iThome 鐵人賽，並完成了精彩的系列文章<a href="https://ithelp.ithome.com.tw/users/20178725/ironman/8654" target="_blank" rel="noopener noreferrer">「新世紀維運戰士：30 天用 Service Mesh 對抗 Kubernetes 使徒」</a>，展現了社群資源的價值。</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2026-年展望">2026 年展望<a href="https://docs.cloudnative.tw/blog/2025-recap#2026-%E5%B9%B4%E5%B1%95%E6%9C%9B" class="hash-link" aria-label="2026 年展望的直接連結" title="2026 年展望的直接連結">​</a></h2>
+<p>展望新的一年，我們設下了以下目標：</p>
+<ul>
+<li><strong>推廣社群應用</strong>：隨著「源來適你（opensource4you）」社群的加入，平台使用率已有顯著提升，我們期待未來能吸引更多使用者投入。</li>
+<li><strong>系統持續演進</strong>：定期將核心系統更新至最新穩定版本。</li>
+<li><strong>優化維運流程</strong>：強化自動化部署機制，並持續改善現有的監控系統。</li>
+<li><strong>網路架構改善</strong>：提升網路層面的穩定性與效能。</li>
+<li><strong>招募維護夥伴</strong>：誠摯歡迎對 OpenStack、Ceph 或基礎建設有興趣的夥伴加入維護團隊。</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="特別感謝">特別感謝<a href="https://docs.cloudnative.tw/blog/2025-recap#%E7%89%B9%E5%88%A5%E6%84%9F%E8%AC%9D" class="hash-link" aria-label="特別感謝的直接連結" title="特別感謝的直接連結">​</a></h2>
+<p>特別感謝 tico88612 在過去一年對 Infra Labs 的投入與支持，協助處理各項繁雜的營運事務，讓平台能夠順利運作。</p>
+<hr>
+<p><em>Infra Labs 致力於為開源社群提供優質的基礎建設服務，期待在 2026 年能與更多夥伴一同成長。</em></p>]]></content:encoded>
+            <category>recap</category>
+        </item>
         <item>
             <title><![CDATA[CNTUG Infra Labs 2024 Recap]]></title>
             <link>https://docs.cloudnative.tw/blog/2024-recap</link>
@@ -140,7 +177,7 @@
 <li>DNS</li>
 </ul>
 <p>最近新增了提供給虛擬機器 GPU 使用，如果有需求歡迎申請使用。</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="專��案成果">專案成果<a href="https://docs.cloudnative.tw/blog/2022-recap#%E5%B0%88%E6%A1%88%E6%88%90%E6%9E%9C" class="hash-link" aria-label="專案成果的直接連結" title="專案成果的直接連結">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="專案成果">專案成果<a href="https://docs.cloudnative.tw/blog/2022-recap#%E5%B0%88%E6%A1%88%E6%88%90%E6%9E%9C" class="hash-link" aria-label="專案成果的直接連結" title="專案成果的直接連結">​</a></h2>
 <p>今年 (2022) 本專案提供對象，主要包含技術社群與電資學生使用，其中亦對 Infra Labs 進行測試和系統架設，以下為 2022 年使用案例的成果發表，並達成本專案回饋社會與培育英才的目標。</p>
 <ul>
 <li><a href="https://malagege.github.io/blog/2022/04/03/%E5%9C%A8-Kubernetes-%E7%94%A8-Loki-%E8%92%90%E9%9B%86-log-%E5%81%9A%E7%9B%A3%E6%8E%A7%E8%AD%A6%E5%91%8A%E9%80%9A%E7%9F%A5%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86%E7%AD%86%E8%A8%98/" target="_blank" rel="noopener noreferrer">在 Kubernetes 用 Loki 蒐集 log 做監控警告通知方法整理筆記</a></li>
@@ -196,7 +233,7 @@
 <p>這一項規劃其實比較偏向許願性質，RISC-V 本身在虛擬化的規格上有一部分剛制定完畢，自己還蠻有興趣測試是否能在 RISC-V 上利用 OpenStack 系統跑 Virtual Machine。當初 ARM64 剛興起進行 OpenStack porting 也是個蠻有趣的經歷。但目前由於支援虛擬化的 RISC-V 測試板不易取得，所以這項計畫還在擱置當中。</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="改善網路架構">改善網路架構<a href="https://docs.cloudnative.tw/blog/2022-recap#%E6%94%B9%E5%96%84%E7%B6%B2%E8%B7%AF%E6%9E%B6%E6%A7%8B" class="hash-link" aria-label="改善網路架構的直接連結" title="改善網路架構的直接連結">​</a></h3>
 <p>上面有提到目前網路架構其實是整個 Infra Labs 最脆弱的部分，但由於牽扯到設備、資金等問題，改善難度比較大。</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="更多貢獻">更多貢獻<a href="https://docs.cloudnative.tw/blog/2022-recap#%E6%9B%B4%E5%A4%9A%E8%B2%A2%E7%8D%BB" class="hash-link" aria-label="更多貢獻的直接連結" title="更多貢獻的直接連結">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="更多貢獻">更多貢獻<a href="https://docs.cloudnative.tw/blog/2022-recap#%E6%9B%B4%E5%A4%9A%E8%B2%A2%E7%8D%BB" class="hash-link" aria-label="更多貢獻的直接連結" title="更多貢獻��的直接連結">​</a></h3>
 <p>Infra Labs 維運過程中其實有時都會遭遇一些 bug，筆者已經貢獻了幾個 PR 至 kops 以及 OpenStack 的 bug report，期望在未來能夠利用 Infra Labs 對開源社群進行更多的貢獻。</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="總結">總結<a href="https://docs.cloudnative.tw/blog/2022-recap#%E7%B8%BD%E7%B5%90" class="hash-link" aria-label="總結的直接連結" title="總結的直接連結">​</a></h2>
 <p>Infra Labs 算是我生涯中進行過最複雜的一個計畫了，其中其實學到了蠻多東西也燒了蠻多的錢。在這一年內其實整個系統的利用率比我一開始預期的好，也希望明年 Infra Labs 可以為台灣甚至全世界的開源社群帶來更多的貢獻。</p>
