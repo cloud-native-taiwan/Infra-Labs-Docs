@@ -27,6 +27,10 @@ const config = {
     locales: ['zh-Hant-TW'],
   },
 
+  markdown: {
+    mermaid: true,
+  },
+
   presets: [
     [
       'classic',
@@ -56,6 +60,8 @@ const config = {
       }),
     ],
   ],
+
+  themes: ['@docusaurus/theme-mermaid'],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -87,7 +93,7 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'architecture/network',
+            docId: 'architecture/index',
             position: 'left',
             label: "Architecture"
           },
@@ -153,7 +159,7 @@ const config = {
               },
               {
                 label: 'Meetup 活動',
-                href: 'https://community.cncf.io/cloud-native-taiwan-user-group/',
+                href: 'https://www.meetup.com/CloudNative-Taiwan/',
               },
             ],
           },
