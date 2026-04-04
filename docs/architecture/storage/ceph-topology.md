@@ -85,23 +85,23 @@ MON daemon 在 Ceph public 網路（192.168.114.x）上監聽 port 3300（v2 協
 
 | 主機 | OSD ID | 裝置類別 | 權重（TiB） | 實體磁碟 |
 |------|--------|----------|------------|----------|
-| openstack01 | osd.3 | nvme | 3.49 | KIOXIA CD6 3.84 TB |
-| openstack01 | osd.6 | nvme | 3.49 | KIOXIA CD6 3.84 TB |
-| openstack01 | osd.2 | sata_ssd | 1.46 | Intel S3500 1.6 TB |
-| openstack02 | osd.0 | nvme | 1.75 | KIOXIA CD6 1.9 TB |
-| openstack02 | osd.1 | nvme | 1.75 | KIOXIA CD6 1.9 TB |
-| openstack02 | osd.5 | nvme | 1.75 | KIOXIA CD6 1.9 TB |
-| openstack02 | osd.10 | nvme | 1.75 | KIOXIA CD6 1.9 TB |
-| openstack02 | osd.17 | sata_ssd | 1.46 | Intel S3500 1.6 TB |
-| openstack04 | osd.8 | hdd | 14.55 | Seagate X18 16 TB |
-| openstack04 | osd.37 | hdd | 14.55 | Seagate X18 16 TB |
-| openstack04 | osd.9 | nvme | 3.49 | Samsung PM983 3.84 TB |
-| openstack04 | osd.13 | nvme | 3.49 | Samsung PM983 3.84 TB |
-| openstack05 | osd.7 | hdd | 14.55 | Seagate X18 16 TB |
-| openstack05 | osd.11 | hdd | 14.55 | Seagate X18 16 TB |
-| openstack05 | osd.4 | sata_ssd | 1.46 | Intel S3500 1.6 TB |
-| openstack06 | osd.12 | hdd | 14.55 | Seagate X18 16 TB |
-| openstack06 | osd.34 | hdd | 14.55 | Seagate X18 16 TB |
+| openstack01 | osd.3 | nvme | 3.49 | Samsung PM983 3.84 TB (MZ4LB3T8HMLA) |
+| openstack01 | osd.6 | nvme | 3.49 | KIOXIA CD6 3.84 TB (KCD61LUL3T84) |
+| openstack01 | osd.2 | sata_ssd | 1.46 | Intel SSDSC2BB01 1.6 TB |
+| openstack02 | osd.0 | nvme | 1.75 | KIOXIA CD6 (KCD61LUL3T84) 1.92 TB — nvme0 ns1 |
+| openstack02 | osd.1 | nvme | 1.75 | KIOXIA CD6 (KCD61LUL3T84) 1.92 TB — nvme0 ns2 |
+| openstack02 | osd.5 | nvme | 1.75 | KIOXIA CD6 (KCD61LUL3T84) 1.92 TB — nvme1 ns1 |
+| openstack02 | osd.10 | nvme | 1.75 | KIOXIA CD6 (KCD61LUL3T84) 1.92 TB — nvme1 ns2 |
+| openstack02 | osd.17 | sata_ssd | 1.46 | Intel SSDSC2BB01 1.6 TB |
+| openstack04 | osd.8 | hdd | 14.55 | Seagate EXOS X18 16 TB (ST16000NM000J) |
+| openstack04 | osd.37 | hdd | 14.55 | Toshiba MG08-D 16 TB (MG08ACA16TE) |
+| openstack04 | osd.9 | nvme | 3.49 | Samsung PM983 3.84 TB (MZ4LB3T8HALS) |
+| openstack04 | osd.13 | nvme | 3.49 | Samsung PM983 3.84 TB (MZ4LB3T8HALS) |
+| openstack05 | osd.7 | hdd | 14.55 | WD Ultrastar DC HC550 16 TB (WUH721816AL) |
+| openstack05 | osd.11 | hdd | 14.55 | Seagate 16 TB (ST16000NM001G) |
+| openstack05 | osd.4 | sata_ssd | 1.46 | Intel SSDSC2BB01 1.6 TB |
+| openstack06 | osd.12 | hdd | 14.55 | Seagate EXOS X18 16 TB (ST16000NM000J) |
+| openstack06 | osd.34 | hdd | 14.55 | Seagate EXOS X18 16 TB (ST16000NM000J) |
 
 全部 17 個 OSD 狀態均為：**up** 且 **in**。
 

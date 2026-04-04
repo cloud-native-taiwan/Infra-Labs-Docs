@@ -17,12 +17,12 @@ sidebar_position: 1
 | CPU | AMD EPYC 7282 x2（16C/32T each） |
 | 核心 / 執行緒 | 32C / 64T 合計 |
 | 記憶體 | 512 GB DDR4 ECC |
-| 開機磁碟 | Intel 730 240 GB SSD |
+| 開機磁碟 | Samsung MZ7WD480 480 GB SSD（原 Intel 730 因故障更換） |
 | 資料網卡 | Mellanox ConnectX-4 Lx 2x25GbE（bond0、LACP） |
 | 管理網卡 | 2x1GbE 內建 |
-| Ceph 磁碟 | KIOXIA CD6 3.84 TB NVMe x2、Intel S3500 1.6 TB SATA SSD |
+| Ceph 磁碟 | Samsung PM983 3.84 TB NVMe (MZ4LB3T8HMLA)、KIOXIA CD6 3.84 TB NVMe (KCD61LUL3T84)、Intel SSDSC2BB01 1.6 TB SATA SSD |
 
-Ceph OSD 權重：osd.3（nvme、3.49 TiB）、osd.6（nvme、3.49 TiB）、osd.2（sata_ssd、1.46 TiB）。
+Ceph OSD 權重：osd.3（nvme、3.49 TiB）、osd.6（nvme、3.49 TiB）、osd.2（sata_ssd、1.46 TiB）。Samsung PM983 由 openstack05 移入。
 
 ---
 
@@ -36,7 +36,7 @@ Ceph OSD 權重：osd.3（nvme、3.49 TiB）、osd.6（nvme、3.49 TiB）、osd.
 | 開機磁碟 | SanDisk CloudSpeed 480 GB SSD |
 | 資料網卡 | Mellanox ConnectX-4 Lx 2x25GbE（bond0、LACP） |
 | 管理網卡 | 2x1GbE 內建 |
-| Ceph 磁碟 | KIOXIA CD6 1.9 TB NVMe x4、Intel S3500 1.6 TB SATA SSD |
+| Ceph 磁碟 | KIOXIA CD6 (KCD61LUL3T84) NVMe x2（各 2 namespace，每 namespace 1.92 TB）、Intel SSDSC2BB01 1.6 TB SATA SSD |
 
 Ceph OSD 權重：osd.0（nvme、1.75 TiB）、osd.1（nvme、1.75 TiB）、osd.5（nvme、1.75 TiB）、osd.10（nvme、1.75 TiB）、osd.17（sata_ssd、1.46 TiB）。
 
@@ -52,7 +52,7 @@ Ceph OSD 權重：osd.0（nvme、1.75 TiB）、osd.1（nvme、1.75 TiB）、osd.
 | 開機磁碟 | Seagate 15K 900 GB SAS x2 |
 | 資料網卡 | Mellanox ConnectX-4 Lx 2x25GbE（bond0、LACP） |
 | 管理網卡 | 4x1GbE 內建 |
-| Ceph 磁碟 | Samsung PM983 3.84 TB NVMe x2、Seagate X18 16 TB HDD x2 |
+| Ceph 磁碟 | Samsung PM983 3.84 TB NVMe (MZ4LB3T8HALS) x2、Seagate EXOS X18 16 TB HDD (ST16000NM000J)、Toshiba MG08-D 16 TB HDD (MG08ACA16TE) |
 
 Ceph OSD 權重：osd.9（nvme、3.49 TiB）、osd.13（nvme、3.49 TiB）、osd.8（hdd、14.55 TiB）、osd.37（hdd、14.55 TiB）。
 
@@ -68,9 +68,9 @@ Ceph OSD 權重：osd.9（nvme、3.49 TiB）、osd.13（nvme、3.49 TiB）、osd
 | 開機磁碟 | Seagate 15K 900 GB SAS x2 |
 | 資料網卡 | Mellanox ConnectX-4 Lx 2x25GbE（bond0、LACP） |
 | 管理網卡 | 4x1GbE 內建 |
-| Ceph 磁碟 | Samsung PM983 3.84 TB NVMe（未納入 Ceph）、Intel S3500 1.6 TB SATA SSD、Seagate X18 16 TB HDD x2 |
+| Ceph 磁碟 | Intel SSDSC2BB01 1.6 TB SATA SSD、WD Ultrastar DC HC550 16 TB HDD (WUH721816AL)、Seagate 16 TB HDD (ST16000NM001G) |
 
-Ceph OSD 權重：osd.7（hdd、14.55 TiB）、osd.11（hdd、14.55 TiB）、osd.4（sata_ssd、1.46 TiB）。注意：Samsung PM983 NVMe 已實體安裝但未作為 Ceph OSD 使用。
+Ceph OSD 權重：osd.7（hdd、14.55 TiB）、osd.11（hdd、14.55 TiB）、osd.4（sata_ssd、1.46 TiB）。Samsung PM983 NVMe 已移至 openstack01。
 
 ---
 
@@ -81,7 +81,7 @@ Ceph OSD 權重：osd.7（hdd、14.55 TiB）、osd.11（hdd、14.55 TiB）、osd
 | CPU | Intel Xeon Silver 4110（8C/16T） |
 | 核心 / 執行緒 | 8C / 16T |
 | 記憶體 | 192 GB DDR4 ECC |
-| 開機磁碟 | Intel S3500 120 GB SSD x2 |
+| 開機磁碟 | Intel SSDSCKHB12 120 GB SSD x2（md0 RAID） |
 | 資料網卡 | Mellanox ConnectX-4 Lx 2x25GbE（bond0、LACP） |
 | 管理網卡 | 2x1GbE 內建 |
 | Ceph 磁碟 | Seagate X18 16 TB HDD x2 |
