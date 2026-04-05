@@ -65,7 +65,7 @@ Infra Labs 為 CNTUG（Cloud Native Taiwan User Group）成員提供社群基礎
 
 ## IP 定址
 
-Infra Labs 採用 IPv4 與 IPv6 雙協定棧。
+Infra Labs 採用 IPv4 與 IPv6 dual stack。
 
 | 協定 | 前綴 |
 |------|------|
@@ -84,13 +84,13 @@ Infra Labs 採用 IPv4 與 IPv6 雙協定棧。
 
 ## 架構決策紀錄
 
-### ADR-1：為何選擇 OpenStack
+### 決策 1：為何選擇 OpenStack
 
-**背景。** 平台需要一個成熟的開源 IaaS 層，支援多租戶、自助配置，以及廣泛的生態系整合。
+**背景：** 平台需要一個成熟的開源 IaaS 層，支援多租戶、自助配置，以及廣泛的生態系整合。
 
-**決策。** 採用 OpenStack 作為雲端平台。
+**決策：** 採用 OpenStack 作為雲端平台。
 
-**理由。**
+**理由：**
 - 開源私有雲的事實標準。
 - 豐富的 API 介面，相容眾多 CLI/SDK 工具。
 - 龐大的貢獻者社群及長期支援週期。
@@ -98,13 +98,13 @@ Infra Labs 採用 IPv4 與 IPv6 雙協定棧。
 
 ---
 
-### ADR-2：為何選擇 Ceph
+### 決策 2：為何選擇 Ceph
 
-**背景。** 平台需要 block storage（VM volumes）、object storage（S3 相容），以及潛在的 filesystem storage，理想情況下由單一統一系統提供。
+**背景：** 平台需要 block storage（VM volumes）、object storage（S3 相容），以及潛在的 filesystem storage，理想情況下由單一統一系統提供。
 
-**決策。** 採用 Ceph 作為統一儲存後端。
+**決策：** 採用 Ceph 作為統一儲存後端。
 
-**理由。**
+**理由：**
 - 單一叢集同時提供 RBD（Cinder/Glance 的 block storage）、RGW（S3 相容 object storage）及 CephFS（共享檔案系統）。
 - 可透過新增 OSD 節點水平擴展。
 - 與 OpenStack 緊密整合（原生 Cinder 及 Glance 驅動程式）。
@@ -112,13 +112,13 @@ Infra Labs 採用 IPv4 與 IPv6 雙協定棧。
 
 ---
 
-### ADR-3：為何選擇 Kolla-Ansible
+### 決策 3：為何選擇 Kolla-Ansible
 
-**背景。** OpenStack 包含數十個服務，且服務間相依性複雜。部署工具必須可由小型志工團隊維護。
+**背景：** OpenStack 包含數十個服務，且服務間相依性複雜。部署工具必須可由小型志工團隊維護。
 
-**決策。** 使用 Kolla-Ansible（容器化服務）部署 OpenStack。
+**決策：** 使用 Kolla-Ansible（容器化服務）部署 OpenStack。
 
-**理由。**
+**理由：**
 - 每個 OpenStack 服務運行於獨立容器中，隔離相依套件。
 - 滾動升級簡便（拉取新映像、重啟容器）。
 - 文件完善，在 OpenStack 社群中廣泛使用。
@@ -126,13 +126,13 @@ Infra Labs 採用 IPv4 與 IPv6 雙協定棧。
 
 ---
 
-### ADR-4：為何選擇 OVN
+### 決策 4：為何選擇 OVN
 
-**背景。** 網路層必須支援租戶隔離、分散式路由、安全群組及浮動 IP，且無需集中式瓶頸。
+**背景：** 網路層必須支援租戶隔離、分散式路由、安全群組及浮動 IP，且無需集中式瓶頸。
 
-**決策。** 採用 OVN（Open Virtual Network）作為 Neutron ML2 mechanism driver。
+**決策：** 採用 OVN（Open Virtual Network）作為 Neutron ML2 mechanism driver。
 
-**理由。**
+**理由：**
 - 完全分散式資料平面——無需集中式網路節點。
 - 原生支援分散式路由器、ACL 及 DHCP。
 - 在 OVS 專案下積極進行上游開發。
