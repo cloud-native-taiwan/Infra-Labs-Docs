@@ -14,7 +14,7 @@ sidebar_position: 2
 |------|------|------|------------|------|------------|
 | 100 | vm-int | 10.0.0.0/24 | - | 虛擬機內部（租戶 overlay） | Po1-Po5 |
 | 101 | libvirt | 10.0.1.0/24 | - | 即時遷移 | Po1-Po5 |
-| 1000 | 147035 | 172.16.13.0/30 | 172.16.13.2 (Arista) | 至 AS38008 的 BGP 對等互聯（台灣） | Cpu, Po1001 |
+| 1000 | 147035 | 172.16.13.0/30 | 172.16.13.2 (Arista) | 至 AS38008 的 BGP peering（台灣） | Cpu, Po1001 |
 | 1007 | oob-mgmt | 192.168.7.0/24 | 192.168.7.1 (NFX250) | 帶外管理、IPMI | Et27/2, Et27/3 |
 | 1113 | api | 192.168.113.0/24 | 192.168.113.5 (Arista) | OpenStack API 端點 | Cpu, Et27/2, Po1-Po5 |
 | 1114 | ceph-pub | 192.168.114.0/24 | - | Ceph 公用（客戶端）網路 | Po1-Po5 |
@@ -33,7 +33,7 @@ sidebar_position: 2
 
 - **VLAN 1 (default)** 目前未使用（僅含 sxe-0/0/1 及 xe-0/0/13 等未連線埠）。帶內管理網路 (192.168.0.0/24) 由 VLAN 3000 承載。
 - **VLAN 100 及 101** 分別承載東西向虛擬機流量與 libvirt 即時遷移流量。兩者皆無閘道，因為路由在 OpenStack overlay 內部處理。
-- **VLAN 1000** 為連接上游 AS38008 (Apernet) 的點對點 BGP 對等互聯鏈路。/30 子網承載一個 eBGP session。
+- **VLAN 1000** 為連接上游 AS38008 (Apernet) 的點對點 BGP peering 鏈路。/30 子網承載一個 eBGP session。
 - **VLAN 1007** 為 IPMI/BMC 介面的帶外管理網路，僅可透過 EX3300 管理交換機及 NFX250 到達。
 - **VLAN 1113** 承載所有 OpenStack API 流量。Arista SVI 192.168.113.5 提供閘道。Keepalived VIP (192.168.113.252) 在控制平面節點間浮動。
 - **VLAN 1114 及 1115** 為專用 Ceph 網路。VLAN 1114（公用/客戶端）為 bond0 上的 native（untagged）VLAN，VLAN 1115（叢集/複製）則為 tagged。分離客戶端與複製流量可防止復原風暴影響虛擬機 I/O。

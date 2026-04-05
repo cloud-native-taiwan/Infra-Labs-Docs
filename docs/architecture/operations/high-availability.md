@@ -10,14 +10,14 @@ sidebar_position: 1
 
 | 元件 | 實例數 | Quorum | 影響（失去 1 節點） | 影響（失去 2 節點） |
 |------|--------|--------|---------------------|---------------------|
-| OpenStack API（HAProxy+Keepalived） | 3 active-active | 不適用 | 降級，仍可運作 | 降級，仍可運作 |
+| OpenStack API（HAProxy+Keepalived） | 3 active-active | 不適用 | degraded，仍可運作 | degraded，仍可運作 |
 | MariaDB Galera + ProxySQL | 3 節點叢集 | 2/3 | 正常運作 | 叢集停止 |
 | RabbitMQ | 3 節點叢集 | 2/3 | 正常運作 | 叢集停止 |
 | Ceph MON | 3 個 monitor | 2/3 | 正常運作 | 唯讀/停止 |
 | Ceph MGR | 2（1 active，1 standby） | 1/2 | 故障轉移至 standby | 無法管理 |
-| Ceph OSD（NVMe，size=3） | 跨 3-4 主機 | 不適用 | 降級，復原中 | 資料有風險 |
+| Ceph OSD（NVMe，size=3） | 跨 3-4 主機 | 不適用 | degraded，復原中 | 資料有風險 |
 | Ceph OSD（SATA SSD，size=2） | 跨 3 主機 | 不適用 | 剩餘 1 份副本（min_size=1） | 資料遺失 |
-| Ceph OSD（HDD，size=3） | 跨 3 主機 | 不適用 | 降級，無備用主機 | 資料有風險 |
+| Ceph OSD（HDD，size=3） | 跨 3 主機 | 不適用 | degraded，無備用主機 | 資料有風險 |
 | OVN NB/SB DB | 3 控制節點 | 2/3 | 正常運作 | 網路控制中斷 |
 | Arista 核心交換器 | 1 台設備 | 不適用 | 全面網路中斷 | 不適用 |
 | NFX250 邊界 | 1 台設備 | 不適用 | NAT/VPN/管理閘道中斷 | 不適用 |
@@ -30,7 +30,7 @@ sidebar_position: 1
 3. **EX3300-48T** -- 單一管理交換器。其故障將移除 IPMI 存取，使遠端復原變得不可能。
 4. **Ceph SATA SSD 層（volumes-sata-ssd pool）** -- size=2，min_size=1。失去一台主機後資料僅剩單一副本。任何額外的故障將導致資料遺失。
 
-## 依主機的故障域分析
+## 依主機的 failure domain 分析
 
 ### openstack01 故障
 
@@ -38,7 +38,7 @@ sidebar_position: 1
 - Ceph MON quorum 仍完整（剩餘 2/3）。
 - Ceph MGR 故障轉移至 standby（若 active 位於 01）。
 - 南北向流量轉移至其他 OVN gateway。
-- Ceph NVMe pool 降級（剩餘 2 台具有 NVMe 的主機）。
+- Ceph NVMe pool degraded（剩餘 2 台具有 NVMe 的主機）。
 
 ### openstack02 故障
 

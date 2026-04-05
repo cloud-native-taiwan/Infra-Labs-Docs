@@ -84,7 +84,7 @@ sequenceDiagram
 ### 說明
 
 - Geneve 增加約 50-54 位元組的額外負擔（外層 Ethernet + IP + UDP + Geneve header）。
-- 實體 MTU 為 9000 時，內層虛擬機 MTU 可安全維持在 1500，或若租戶網路需要巨型訊框，可提升至約 8900。
+- 實體 MTU 為 9000 時，內層虛擬機 MTU 可安全維持在 1500，或若租戶網路需要 jumbo frame，可提升至約 8900。
 
 ---
 
@@ -113,7 +113,7 @@ sequenceDiagram
 
 - VLAN 1114（公用）作為 bond0 上的 native/untagged VLAN 承載。
 - VLAN 1115（叢集）作為 tagged 子介面 (bond0.1115) 承載。
-- 兩個網路皆為純第二層；Ceph 流量不需要路由。
+- 兩個網路皆為純 L2；Ceph 流量不需要路由。
 
 ---
 

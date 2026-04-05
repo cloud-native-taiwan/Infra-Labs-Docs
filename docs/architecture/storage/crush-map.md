@@ -110,7 +110,7 @@ Ceph 根據底層儲存媒體類型自動為每個 OSD 指派裝置類別。CRUS
 - **具有 NVMe OSD 的主機**：openstack01（2 個 OSD）、openstack02（4 個 OSD）、openstack04（2 個 OSD）
 - **複製設定**：size=3、min_size=2
 - **分析**：恰好 3 台主機擁有 NVMe OSD。在複製 size 為 3 的設定下，每台主機必須儲存每個物件的一份副本。這意味著：
-  - 遺失 1 台主機：叢集降級至 2 份副本（高於 min_size）。資料仍可存取，但在故障節點恢復或新增 NVMe OSD 之前無法重新複製至第三台主機。
+  - 遺失 1 台主機：叢集 degraded（2 份副本，高於 min_size）。資料仍可存取，但在故障節點恢復或新增 NVMe OSD 之前無法重新複製至第三台主機。
   - 遺失 2 台主機：部分物件的資料將低於 min_size。I/O 可能停滯。
 - **風險**：單一主機故障後 NVMe rebalancing 的餘裕為零。新增第四台具備 NVMe 的主機可改善韌性。
 
@@ -125,13 +125,13 @@ Ceph 根據底層儲存媒體類型自動為每個 OSD 指派裝置類別。CRUS
 
 - **具有 HDD OSD 的主機**：openstack04（2 個 OSD）、openstack05（2 個 OSD）、openstack06（2 個 OSD）
 - **複製設定**：size=3、min_size=2
-- **分析**：恰好 3 台主機，情況與 NVMe 層級相同。遺失 1 台主機會降級至 2 份副本且無 rebalancing 的餘裕。新增第四台具備 HDD 的主機可改善韌性。
-- **風險**：中等。HDD pool 儲存備份、映像及 RGW bucket 資料。這些通常為一次寫入的工作負載，因此暫時性降級的影響低於服務活躍 VM I/O 的 NVMe 層級。
+- **分析**：恰好 3 台主機，情況與 NVMe 層級相同。遺失 1 台主機，叢集 degraded（2 份副本），且無 rebalancing 的餘裕。新增第四台具備 HDD 的主機可改善韌性。
+- **風險**：中等。HDD pool 儲存備份、映像及 RGW bucket 資料。這些通常為一次寫入的工作負載，因此暫時性 degraded 的影響低於服務活躍 VM I/O 的 NVMe 層級。
 
 ### 摘要
 
 | 層級 | 主機數 | 複製設定 | 可容忍主機故障數 | Rebalance 餘裕 |
 |------|--------|----------|-----------------|---------------|
 | NVMe | 3 | 3/2（size/min） | 1 | 無 |
-| SATA SSD | 3 | 2/1（size/min） | 1（降級至單一副本） | 無 |
+| SATA SSD | 3 | 2/1（size/min） | 1（degraded，單一副本） | 無 |
 | HDD | 3 | 3/2（size/min） | 1 | 無 |

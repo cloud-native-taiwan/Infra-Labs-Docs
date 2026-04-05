@@ -29,7 +29,7 @@ sidebar_position: 2
 ### 2. 單一控制節點故障
 
 - Galera、RabbitMQ、Ceph MON 和 OVN 維持 quorum。
-- 服務在降級模式下持續運作。
+- 服務在 degraded 模式下持續運作。
 - 復原：更換硬體並透過 kolla-ansible 重建控制節點。
 
 ### 3. 兩個控制節點故障

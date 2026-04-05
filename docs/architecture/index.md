@@ -5,7 +5,7 @@ sidebar_label: "架構總覽"
 
 # Infra Labs 架構
 
-Infra Labs 是由 [Cloud Native Taiwan User Group (CNTUG)](https://cloudnative.tw/) 營運的社群基礎設施即服務（IaaS）平台。平台以 OpenStack 提供運算資源、Ceph 提供儲存服務、OVN 提供軟體定義網路，服務對象為 CNTUG 成員及社群專案。平台部署於單一機櫃的實體環境中，具備雙協定棧 IPv4/IPv6 連線能力，並透過 BGP 與上游對等互聯。
+Infra Labs 是由 [Cloud Native Taiwan User Group (CNTUG)](https://cloudnative.tw/) 營運的社群基礎設施即服務（IaaS）平台。平台以 OpenStack 提供運算資源、Ceph 提供儲存服務、OVN 提供軟體定義網路，服務對象為 CNTUG 成員及社群專案。平台部署於單一機櫃的實體環境中，具備 dual stack IPv4/IPv6 連線能力，並透過 BGP 與上游 peering。
 
 本文件為架構文件的頂層入口。請先從下方的情境圖瞭解各主要子系統之間的關係，再循連結深入各專題區域。
 

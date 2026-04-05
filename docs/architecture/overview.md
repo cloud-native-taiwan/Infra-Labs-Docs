@@ -48,7 +48,7 @@ Infra Labs 為 CNTUG（Cloud Native Taiwan User Group）成員提供社群基礎
 
 | 設備 | 型號 | 角色 |
 |------|------|------|
-| Arista 核心交換器 | DCS-7060CX-32S | 核心路由與交換、與上游 BGP 對等互聯、100G fabric |
+| Arista 核心交換器 | DCS-7060CX-32S | 核心路由與交換、與上游 BGP peering、100G fabric |
 | Juniper NFX250 | NFX250 | 邊界功能、IPMI 連線（8x RJ-45 ge-0/0/0 至 ge-0/0/7） |
 | Juniper 管理交換器 | EX3300-48T | 帶外管理、IPMI |
 
@@ -142,4 +142,4 @@ Infra Labs 採用 IPv4 與 IPv6 dual stack。
 
 ## 下一步
 
-前往[網路架構](network/)瞭解實體拓撲、VLAN 規劃、BGP 對等互聯及 OVN overlay 網路的詳細資訊。
+前往[網路架構](network/)瞭解實體拓撲、VLAN 規劃、BGP peering 及 OVN overlay 網路的詳細資訊。
