@@ -45,21 +45,73 @@ const sidebars = {
     'faq',
   ],
   architecture: [
-    'architecture/network',
-    'architecture/iaas',
+    { type: 'doc', id: 'architecture/index', label: '架構總覽' },
+    { type: 'doc', id: 'architecture/overview', label: '系統概覽' },
     {
       type: 'category',
-      label: 'Admin 專區',
+      label: '網路架構',
+      link: { type: 'doc', id: 'architecture/network/index' },
+      items: [
+        'architecture/network/physical-topology',
+        'architecture/network/vlan-ip-addressing',
+        'architecture/network/routing',
+        'architecture/network/traffic-flows',
+      ],
+    },
+    {
+      type: 'category',
+      label: '運算架構',
+      link: { type: 'doc', id: 'architecture/compute/index' },
+      items: [
+        'architecture/compute/hardware-inventory',
+        'architecture/compute/node-roles',
+        'architecture/compute/multi-arch',
+      ],
+    },
+    {
+      type: 'category',
+      label: '儲存架構',
+      link: { type: 'doc', id: 'architecture/storage/index' },
+      items: [
+        'architecture/storage/ceph-topology',
+        'architecture/storage/crush-map',
+        'architecture/storage/pools-and-backends',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'OpenStack 服務',
+      link: { type: 'doc', id: 'architecture/openstack/index' },
+      items: [
+        'architecture/openstack/control-plane',
+        'architecture/openstack/service-catalog',
+        'architecture/openstack/neutron-networking',
+        'architecture/openstack/identity-and-access',
+      ],
+    },
+    {
+      type: 'category',
+      label: '維運',
+      link: { type: 'doc', id: 'architecture/operations/index' },
+      items: [
+        'architecture/operations/high-availability',
+        'architecture/operations/disaster-recovery',
+        'architecture/operations/monitoring-gaps',
+        'architecture/operations/capacity-planning',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Admin Cookbook',
       link: {
         type: 'generated-index',
-        description: "Admin 管理相關操作 Cookbook"
+        description: 'Admin 管理相關操作 Cookbook',
       },
       items: [
-          'admin/image_build',
-          'admin/openstack_operation',
-      ]
+        'admin/image_build',
+        'admin/openstack_operation',
+      ],
     },
-
   ],
   self_paced_labs: [
     'self-paced-labs',
