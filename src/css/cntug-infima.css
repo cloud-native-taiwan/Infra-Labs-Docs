@@ -67,10 +67,20 @@
   --ifm-color-warning-contrast-background: var(--warning-soft);
   --ifm-color-danger:         var(--danger);
   --ifm-color-danger-contrast-background:  var(--danger-soft);
-  --ifm-color-info:           var(--info);
-  --ifm-color-info-contrast-background:    var(--info-soft);
+  /* Info = teal-cyan, intentionally distinct from --cncf-blue so .button--info
+     never collides with .hero--primary or any CNCF-Blue surface. */
+  --ifm-color-info:              var(--info);
+  --ifm-color-info-dark:         #0995AC;
+  --ifm-color-info-darker:       #088CA2;
+  --ifm-color-info-darkest:      #07748B;
+  --ifm-color-info-light:        #1FBDD3;
+  --ifm-color-info-lighter:      #2EC5DA;
+  --ifm-color-info-lightest:     #57D2E2;
+  --ifm-color-info-contrast-background: var(--info-soft);
+  --ifm-color-info-contrast-foreground: #07748B;
 
   /* ---- Misc ---- */
+  --ifm-hero-background-color: var(--cncf-blue);
   --ifm-link-color:        var(--fg-brand);
   --ifm-link-hover-color:  var(--accent-hover);
   --ifm-navbar-background-color: color-mix(in srgb, var(--bg) 85%, transparent);
@@ -90,12 +100,21 @@
 [data-theme='dark'] {
   /* Primary shifts to the desaturated CNCF Blue from cntug-tokens.css */
   --ifm-color-primary:          #4DA8FF;
-  --ifm-color-primary-dark:     #6FB8FF;
-  --ifm-color-primary-darker:   #9FCBFF;
-  --ifm-color-primary-darkest:  #CCE2FF;
+  --ifm-color-primary-dark:     #2E97FF;
+  --ifm-color-primary-darker:   #1F8FFF;
+  --ifm-color-primary-darkest:  #0086FF;
   --ifm-color-primary-light:    #6FB8FF;
-  --ifm-color-primary-lighter:  #9FCBFF;
-  --ifm-color-primary-lightest: #CCE2FF;
+  --ifm-color-primary-lighter:  #80C2FF;
+  --ifm-color-primary-lightest: #A8D5FF;
+
+  /* Info: teal — distinct from hero (#4DA8FF) and --cncf-blue on dark surfaces */
+  --ifm-color-info:              #4DD3E8;
+  --ifm-color-info-dark:         #2EC5DA;
+  --ifm-color-info-darker:       #1FBDD3;
+  --ifm-color-info-darkest:      #0AA8C0;
+  --ifm-color-info-light:        #6FDBED;
+  --ifm-color-info-lighter:      #80E0F0;
+  --ifm-color-info-lightest:     #A8EBF5;
 
   --ifm-background-color:         var(--bg);
   --ifm-background-surface-color: var(--bg-subtle);
@@ -161,4 +180,13 @@
   --ifm-color-primary-light:    #ED85C2;
   --ifm-color-primary-lighter:  #F19BCD;
   --ifm-color-primary-lightest: #F7C2DF;
+}
+
+/* Docusaurus derives .hero--primary background from --ifm-color-primary,
+   not --ifm-hero-background-color (which is not a real Infima variable).
+   In dark mode --ifm-color-primary is #4DA8FF which makes the hero look
+   washed out. Pin it directly to blue-800 instead. */
+[data-theme='dark'] .hero--primary {
+  background-color: #003566 !important;
+  color: #FFFFFF;
 }

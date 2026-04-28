@@ -14,8 +14,7 @@
 
 /* ---------- Webfonts ----------
    Clarity City — CNCF's official typeface (VMware Clarity Design System, OFL).
-   Loaded from a public CDN. Falls back to system sans if blocked. */
-@import url("https://cdn.jsdelivr.net/npm/@clr/[email protected]/clr-ui.min.css") layer(claritycity);
+   @font-face blocks below load only the font files; no Clarity component CSS is imported. */
 /* Noto Sans TC — Traditional Chinese (primary language for CNTUG). */
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap");
 /* JetBrains Mono — code, terminal, kubectl examples. */
@@ -25,35 +24,35 @@
   font-family: "Clarity City";
   font-weight: 400;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/npm/@clr/[email protected]/dist/Regular/ClarityCityRegular.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/npm/@clr/ui@17.12.2/dist/Regular/ClarityCityRegular.woff2") format("woff2");
   font-display: swap;
 }
 @font-face {
   font-family: "Clarity City";
   font-weight: 500;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/npm/@clr/[email protected]/dist/Medium/ClarityCityMedium.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/npm/@clr/ui@17.12.2/dist/Medium/ClarityCityMedium.woff2") format("woff2");
   font-display: swap;
 }
 @font-face {
   font-family: "Clarity City";
   font-weight: 600;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/npm/@clr/[email protected]/dist/SemiBold/ClarityCitySemiBold.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/npm/@clr/ui@17.12.2/dist/SemiBold/ClarityCitySemiBold.woff2") format("woff2");
   font-display: swap;
 }
 @font-face {
   font-family: "Clarity City";
   font-weight: 700;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/npm/@clr/[email protected]/dist/Bold/ClarityCityBold.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/npm/@clr/ui@17.12.2/dist/Bold/ClarityCityBold.woff2") format("woff2");
   font-display: swap;
 }
 @font-face {
   font-family: "Clarity City";
   font-weight: 800;
   font-style: normal;
-  src: url("https://cdn.jsdelivr.net/npm/@clr/[email protected]/dist/ExtraBold/ClarityCityExtraBold.woff2") format("woff2");
+  src: url("https://cdn.jsdelivr.net/npm/@clr/ui@17.12.2/dist/ExtraBold/ClarityCityExtraBold.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -128,8 +127,10 @@
   --warning-soft:  #FEF9C3;
   --danger:        #DC2626;
   --danger-soft:   #FEE2E2;
-  --info:          var(--cncf-blue);
-  --info-soft:     var(--cncf-turquoise);
+  /* Info is a STATUS hue, intentionally distinct from --cncf-blue (the CTA / brand
+     accent) so that Infima's .button--info never collides with .hero--primary. */
+  --info:          #0AA8C0;
+  --info-soft:     #E0F7FB;
 
   /* Shadows — tinted toward CNCF deep blue ("blueprint", not grey) */
   --shadow-xs: 0 1px 2px rgba(0, 26, 51, 0.06);
@@ -260,8 +261,8 @@
   --warning-soft:  rgba(250, 204, 21, 0.14);
   --danger:        #F87171;
   --danger-soft:   rgba(248, 113, 113, 0.14);
-  --info:          var(--cncf-blue);
-  --info-soft:     rgba(159, 233, 255, 0.14);
+  --info:          #4DD3E8;
+  --info-soft:     rgba(77, 211, 232, 0.14);
 
   --shadow-xs: 0 1px 2px rgba(0,0,0,0.35);
   --shadow-sm: 0 2px 4px rgba(0,0,0,0.40), 0 1px 2px rgba(0,0,0,0.30);
@@ -269,6 +270,30 @@
   --shadow-lg: 0 12px 32px rgba(0,0,0,0.55), 0 4px 8px rgba(0,0,0,0.30);
   --shadow-xl: 0 24px 48px rgba(0,0,0,0.60);
   --shadow-focus: 0 0 0 3px rgba(77, 168, 255, 0.45);
+}
+
+/* Auto dark theme when user prefers it (still overridable via [data-theme=light]) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1C1C1E; --bg-subtle: #232326; --bg-muted: #2C2C2E; --bg-inverse: #F2F2F7;
+    --fg: rgba(235,235,245,0.92); --fg-muted: rgba(235,235,245,0.62); --fg-subtle: rgba(235,235,245,0.40); --fg-inverse: #1C1C1E; --fg-brand: #4DA8FF;
+    --border: rgba(235,235,245,0.10); --border-strong: rgba(235,235,245,0.18); --border-brand: #4DA8FF;
+    --cncf-blue: #4DA8FF; --cncf-turquoise: #9FE9FF; --cncf-pink: #E96FB7;
+    --blue-50: rgba(77,168,255,0.10); --blue-100: rgba(77,168,255,0.16); --blue-200: rgba(77,168,255,0.28);
+    --blue-300: #6FB8FF; --blue-400: #4DA8FF; --blue-500: #4DA8FF; --blue-600: #6FB8FF; --blue-700: #9FCBFF; --blue-800: #CCE2FF; --blue-900: #E6F0FF;
+    --accent: #4DA8FF; --accent-hover: #6FB8FF; --accent-press: #9FCBFF; --accent-soft: rgba(77,168,255,0.14);
+    --success:#4ADE80; --success-soft:rgba(74,222,128,0.14);
+    --warning:#FACC15; --warning-soft:rgba(250,204,21,0.14);
+    --danger:#F87171;  --danger-soft:rgba(248,113,113,0.14);
+    --info:#4DD3E8; --info-soft:rgba(77,211,232,0.14);
+    --shadow-xs:0 1px 2px rgba(0,0,0,.35);
+    --shadow-sm:0 2px 4px rgba(0,0,0,.40),0 1px 2px rgba(0,0,0,.30);
+    --shadow-md:0 4px 12px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.30);
+    --shadow-lg:0 12px 32px rgba(0,0,0,.55),0 4px 8px rgba(0,0,0,.30);
+    --shadow-xl:0 24px 48px rgba(0,0,0,.60);
+    --shadow-focus:0 0 0 3px rgba(77,168,255,.45);
+  }
 }
 
 ::selection { background: var(--cncf-turquoise); color: var(--cncf-black); }
